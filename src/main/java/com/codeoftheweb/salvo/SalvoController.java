@@ -58,7 +58,7 @@ public class SalvoController {
     @RequestMapping(path = "players", method = RequestMethod.POST)
     public ResponseEntity<Object> createUser(@RequestParam String userName, @RequestParam String password, @RequestParam String name) {
 
-        
+
         if (userName.isEmpty() || password.isEmpty() || name.isEmpty()) {
             return new ResponseEntity<>(makeMap("error", "No name"), HttpStatus.FORBIDDEN);
         }
