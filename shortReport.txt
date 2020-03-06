@@ -1,0 +1,6 @@
+Lo primero que hice para comenzar a resolver esta actividad fue descargar JAVA version 13 ( el SDK) que
+ me funciono con Spring, luego instale Gradle que no se me complicó porque era muy parecido a instalar Java,
+ lo principal que había que saber era cómo agregar Variables de entorno y agregar también el Path. 
+Luego instale IntelliJ IDEA el cual es un entorno para el desarrollo de lenguajes informáticos en 
+donde pude programar con JAVA, Html y Javascript para lograr crear un JSON y así mismo guardar datos
+ desde el html hacia el objeto JSON.

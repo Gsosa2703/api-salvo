@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Salvo</title>
+  <link rel="stylesheet" href="bootstrap4/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/games.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Luckiest+Guy" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+</head>
+
+<body>
+  <div id="div-allGames">
+
+    <header class="logOut row">
+      <div class=" animated  bounce col-lg-10">
+        <p id="div-logOut">
+        </p>
+      </div>
+      <div class="button-logOut  col-lg-2 animated swing delays-2s">
+        <input type="button" class="btn btn-dark" id="button-logOut" value="Log out" onclick="logOut()">
+      </div>
+    </header>
+
+    <section class="interface-responsive">
+      <div>
+
+        <img src="css/login.jpg" alt="barcos" class="img-landscape">
+
+      </div>
+
+      <div class="landscape-circle ">
+        <div>
+          <p>Start your own Battleship!</p>
+          <p class="texto-circle"> Create a game and shoot your opponent's grid to find and destroy enemy ships before they sink yours </p>
+          <input type="button" class="btn btn-primary" id="button-crearJuego" value="Create a Game" onclick="crearJuego()">
+        </div>
+      </div>
+
+      <div class="acordeon-responsive">
+
+        <div class="subapartado">
+
+          <div class="titulo">
+            <p class="titulo">All Games</p>
+          </div>
+
+          <div class="info">
+            <div class="info-lista">
+              <ol class="list">
+              </ol>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="subapartado">
+
+          <div class="titulo">
+            <p class="titulo">LeaderBoard</p>
+          </div>
+
+          <div class="info">
+            <div class="info-lista table-responsive">
+
+              <table class="tablaGames table" id="tabla">
+                <thead>
+                  <tr id="tr">
+                    <td>Name</td>
+                    <td>Total</td>
+                    <td>Wins</td>
+                    <td>Losses</td>
+                    <td>Tied</td>
+                  </tr>
+                </thead>
+                <tbody class="leaderBoard">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </section>
+
+
+    <div class="row justify-content-center interface-grande">
+      <div class="col-6 circulo">
+        <div class="circle ">
+          <p>Start your own Battleship!</p>
+          <p class="texto-circle"> Create a game and shoot your opponent's grid to find and destroy enemy ships before they sink yours </p>
+          <input type="button" class="btn btn-primary" id="button-crearJuego" value="Create a Game" onclick="crearJuego()">
+        </div>
+      </div>
+
+      <div class="col-6 tabla-pantalla">
+        <div>
+          <h2 id="titulo-leader">Leaderboard</h2>
+        </div>
+        <table class="tablaGames" id="tabla2">
+          <thead>
+            <tr id="tr2">
+              <td>User Name</td>
+              <td>Total</td>
+              <td>Wins</td>
+              <td>Losses</td>
+              <td>Tied</td>
+            </tr>
+          </thead>
+          <tbody class="leaderBoard">
+          </tbody>
+        </table>
+      </div>
+      <div id="lista">
+        <h1 id="titulo-lista">All Games:</h1>
+        <ol class="list">
+        </ol>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="logIn row" id="divRegister">
+
+    <div class=" col-sm-12 col-lg-8 imagen-logIn">
+      <img src="css/battleship.jpg" alt="battleship" class="img-fluid">
+    </div>
+    <div class=" col-sm-12 col-lg-4 formulario" id="form-logIn">
+      <form>
+        <label for="email">User Name:</label><br>
+        <input type="text" id="email" name="email" placeholder="pepe@gmail.com"><br>
+        <label for="password"> Password:</label><br>
+        <input type="password" id="password" name="password" placeholder="***"><br>
+        <input type="button" class="btn btn-dark" id="button-logIn" value="Log in" onclick="login()">
+      </form>
+      <div class="registro">
+        <p>Have not an account?</p>
+        <button type="button" id="button-register">Register</button>
+      </div>
+    </div>
+    <div class="col-sm-12 col-lg-4 formulario" id="form-register">
+      <p class="newPlayer">Create a New Player</p>
+      <form method="POST" action="/players">
+        <label for="name"> Name:</label><br>
+        <input type="text" id="name" name="name" placeholder="Pepe"><br>
+        <label for="email">User Name:</label><br>
+        <input type="text" id="semail" name="email" placeholder="pepe@gmail.com"><br>
+        <label for="password"> Password:</label><br>
+        <input type="password" id="spassword" name="password" placeholder="***"><br>
+        <input type="button" class="btn btn-dark" value="Register now!" onclick="signIn()">
+      </form>
+    </div>
+
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="scripts/games.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ship Locations!</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <div id="app">
+    
+    <h1 id="titulo"> Players </h1>
+    <p id="players"> <span class="current"> {{player.email}}</span> VS {{oponent.email}}</p>
+    <table id="tabla-ship">
+      <thead>
+        <tr>
+          <td class="celda-vacia"></td>
+          <td v-for="number in numbers" v-bind:id="number">{{number}}</td>
+        </tr>
+
+      </thead>
+
+      <tbody id="td">
+        <tr v-for="letter in letters" v-bind:id="letter">
+          <td id="letra"> {{letter}}</td>
+          <td v-for="number in numbers" v-bind:id="letter+number"></td>
+        </tr>
+      </tbody>
+
+    </table>
+    <table id="tabla-salvo">
+      <thead>
+        <tr>
+          <td class="celda-vacia"></td>
+          <td v-for="number in numbers"> {{number}}</td>
+
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr v-for="letter in letters">
+          <td>{{letter}}</td>
+          <td v-for="number in numbers" v-bind:id="letter+number+'s'"></td>
+
+
+        </tr>
+      </tbody>
+
+    </table>
+
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="scripts/game.js"></script>
+</body>
+
+</html>

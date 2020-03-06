@@ -1,0 +1,63 @@
+table {
+ background-image: url("fondo.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+display: inline-block;
+  margin: 50px;
+
+}
+#titulo{
+  font-family: impact;
+  color: darkblue;
+  font-size: 25px;
+  letter-spacing: 5px;
+  text-align: center;
+  width: 50%;
+  font-size: 25px;
+  margin-left: 200px;
+}
+#players {
+  font-family: arial;
+  color: green;
+  font-size:20px;
+  text-align: center;
+   width: 50%;
+  margin-left: 200px;
+  font-weight: bold;
+}
+.current {
+  font-size: 25px;
+}
+td{
+    border: solid 1px black;
+    width: 30px;
+    height: 30px;
+  color: white;
+}
+.celda-vacia{
+    border: #B621B1 ;
+}
+
+.tdColoreado{
+  background : darkblue;
+  border-radius: 6px;
+  }
+.tdSalvoes {
+  background: gray;
+  border-radius: 6px;
+}
+#tabla-salvo{
+  background-image: url("fondo.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+display: inline-block;
+
+}
+td{
+  text-align: center;
+   border: solid 2px white;
+  font-weight: bold;
+}
+.celdasTiroteadas {
+  background: red;
+}
