@@ -9,10 +9,10 @@
 
 <body>
   <div id="app">
-    
+
     <h1 id="titulo"> Players </h1>
     <p id="players"> <span class="current"> {{player.email}}</span> VS {{oponent.email}}</p>
-    <table id="tabla-ship">
+    <table id="tabla-ship" ondrop="drop(event)" ondragover="allowDrop(event)">
       <thead>
         <tr>
           <td class="celda-vacia"></td>
@@ -52,9 +52,60 @@
 
   </div>
 
+  <div class="grid">
+  
+    <div class="item carrier" id="drag5" draggable="true" ondragstart="drag(event)">
+      <div class="item-content carrier" >
+        <!-- Safe zone, enter your custom markup -->
+      <p>Carrier</p>
+        <img src="css/naves/carrier.png" id="carrier" alt="carrier">
+
+        <!-- Safe zone ends -->
+      </div>
+    </div>
+
+    <div class="item battleship" id="drag1" draggable="true" ondragstart="drag(event)">
+      <div class="item-content battleship">
+        <p>Battleship</p>
+        <!-- Safe zone, enter your custom markup -->
+        <img src="css/naves/battleship.png" id="battleship" alt="battleship" >
+      </div>
+    </div>
+
+    <div class="item submarine" id="drag2" draggable="true" ondragstart="drag(event)">
+      <div class="item-content submarine">
+        <!-- Safe zone, enter your custom markup -->
+        Submarine
+        <img src="css/naves/submarin.png" id="submarine" alt="submarine">
+
+        <!-- Safe zone ends -->
+      </div>
+    </div>
+
+    <div class="item destroyer" id="drag3" draggable="true" ondragstart="drag(event)">
+      <div class="item-content destroyer">
+        <!-- Safe zone, enter your custom markup -->
+
+        Destroyer
+        <img src="css/naves/destroyer.png" id="destroyer" alt="destroyer">
+        <!-- Safe zone ends -->
+      </div>
+    </div>
+    <div class="item patrol"id="drag4" draggable="true" ondragstart="drag(event)">
+      <div class="item-content patrol">
+        Patrol Boat
+        <!-- Safe zone, enter your custom markup -->
+        <img src="css/naves/patrol.png" id="patrol" alt="patrol-boat">
+        <!-- Safe zone ends -->
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
+  <script src="https://unpkg.com/web-animations-js@2.3.2/web-animations.min.js"></script>
+  <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
   <script src="scripts/game.js"></script>
 </body>
 

@@ -30,8 +30,8 @@ display: inline-block;
 }
 td{
     border: solid 1px black;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
   color: white;
 }
 .celda-vacia{
@@ -60,4 +60,92 @@ td{
 }
 .celdasTiroteadas {
   background: red;
+}
+
+.grid {
+  position: relative;
+}
+.item {
+  display: block;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  z-index: 1;
+  color: black;
+  padding: 20px;
+}
+.item.muuri-item-dragging {
+  z-index: 3;
+}
+.item.muuri-item-releasing {
+  z-index: 2;
+}
+.item.muuri-item-hidden {
+  z-index: 0;
+}
+.item-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  color: black;
+  text-align: center;
+  font-size: 20px;
+}
+
+
+.carrier{
+  height: 80px;
+  width: 230px;
+  
+}
+
+#carrier{
+   height: 80px;
+  width: 230px;
+}
+
+.patrol{
+  height: 40px;
+  width: 50px;
+  
+}
+
+#patrol{
+   height: 40px;
+  width: 100px;
+}
+.submarine{
+  height: 60px;
+  width: 150px;
+  
+}
+
+#submarine{
+   height: 60px;
+  width: 150px;
+}
+
+.battleship{
+  height: 60px;
+  width: 180px;
+  
+}
+
+#battleship{
+   height: 60px;
+  width: 180px;
+}
+
+
+.destroyer{
+  height: 60px;
+  width: 150px;
+  
+}
+
+#destroyer{
+   height: 60px;
+  width: 150px;
 }

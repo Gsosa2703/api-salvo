@@ -7,7 +7,7 @@ console.log(myParam);
 
 
 function crearJson() {
-  fetch("http://localhost:8080/api/game_view/" + myParam, )
+  fetch("/api/game_view/" + myParam, )
     .then(function (response) {
       return response.json()
     })
@@ -33,7 +33,67 @@ var app = new Vue({
     numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
   }
+
 });
+
+var grid = new Muuri('.grid', {
+  dragEnabled: true,
+
+});
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+
+
+function crearShips() {
+  $.post({
+    url: "/api/games/players/" + 9 + "/ships",
+    data: JSON.stringify([
+      {
+        "type": "destroyer",
+        "locations": ["A1", "B1", "C1"]
+        },
+      {
+        "type": "patrol boat",
+        "locations": ["H5", "H6"]
+        },
+      {
+        "type": "submarine",
+        "locations": ["A2", "A3", "A4"]
+        },
+      {
+        "type": "Battleship ",
+        "locations": ["F2", "F3"],
+
+        },
+      {
+        "type": "Carrier",
+        "locations": ["D1", "D2", "D3", "D4", "D5"],
+
+        }
+      ]),
+    dataType: "text",
+    contentType: "application/json"
+  }).done(function () {
+    location.reload();
+  }).fail(function (error) {
+    console.log("Error");
+  })
+
+}
+crearShips();
+
 
 function obtenerPlayers(json) {
   var idGamePlayer = json.id;
@@ -48,7 +108,7 @@ function obtenerPlayers(json) {
 
 function obtenerShips(json) {
   var ships = json.ships;
-  for (var i=1; i< ships.length; i++) {
+  for (var i = 1; i < ships.length; i++) {
     var shipLocations = ships[0].locations.concat(ships[i].locations);
     dibujarLocations(shipLocations);
   }
@@ -60,7 +120,7 @@ function obtenerSalvoes(json) {
   var salvoesOponent = json.salvoes.filter(salvo => salvo.player == app.oponent.id);
   for (let i = 0; i < salvoesPlayer.length; i++) {
     for (let j = 0; j < salvoesOponent.length; j++) {
-      dibujarSalvoes(salvoesPlayer[i].locations, salvoesPlayer[i].turn, salvoesOponent[j].locations, obtenerShips(json) );
+      dibujarSalvoes(salvoesPlayer[i].locations, salvoesPlayer[i].turn, salvoesOponent[j].locations, obtenerShips(json));
     }
   }
 
@@ -88,4 +148,3 @@ function dibujarSalvoes(salvoesPlayer, turn, salvoesOponent, shipLocations) {
     }
   }
 }
-

@@ -37,6 +37,7 @@ function login() {
   }
 }
 
+//funcion para registrar
 function signIn() {
   var username = document.getElementById("semail").value;
   var password = document.getElementById("spassword").value;

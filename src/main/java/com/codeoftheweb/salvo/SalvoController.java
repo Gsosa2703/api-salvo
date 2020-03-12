@@ -55,7 +55,7 @@ public class SalvoController {
     }
 
 
-    @RequestMapping(path = "players", method = RequestMethod.POST)
+    @PostMapping( "players")
     public ResponseEntity<Object> createUser(@RequestParam String userName, @RequestParam String password, @RequestParam String name) {
 
 
@@ -73,7 +73,7 @@ public class SalvoController {
 
     }
 
-    @RequestMapping( path="games/{id}/players", method = RequestMethod.POST)
+    @PostMapping("games/{id}/players")
     public ResponseEntity<Object> joinGame (@PathVariable Long id, Authentication auth ){
             if (isGuest(auth)) {
                 return new ResponseEntity<>(makeMap("error", "You can't create games if you're not logged"), HttpStatus.UNAUTHORIZED);
@@ -99,7 +99,7 @@ public class SalvoController {
 
 
 
-    @RequestMapping(path = "games", method = RequestMethod.POST)
+    @PostMapping("games")
     public ResponseEntity<Object>createGame(Authentication auth ) {
         if (isGuest(auth)) {
             return new ResponseEntity<>(makeMap("error", "You can't create games if you're not logged"), HttpStatus.UNAUTHORIZED);
@@ -125,8 +125,8 @@ public class SalvoController {
         }
         return new ResponseEntity<>( gamePlayer.get().gameViewDTO(), HttpStatus.OK);
     }
-     @RequestMapping("games/players/{gamePlayerId}/ships")
-     public ResponseEntity <Object> Ships (Authentication auth, @PathVariable Long gamePlayerId){
+     @PostMapping("games/players/{gamePlayerId}/ships")
+     public ResponseEntity <Map<String, Object>> Ships (Authentication auth, @PathVariable Long gamePlayerId,@RequestBody List<Ship> ships){
          if (isGuest(auth)) {
              return new ResponseEntity<>(makeMap("error", "You can't access if you're not logged"), HttpStatus.UNAUTHORIZED);
          }
@@ -136,12 +136,19 @@ public class SalvoController {
          if (playerLog.getId() != gamePlayer.get().getPlayer().getId()) {
              return new ResponseEntity<>(makeMap("error", "No tiene acceso"), HttpStatus.UNAUTHORIZED);
          }
-         if(gamePlayer.get().getShips().size() > 0){
+         if(gamePlayer.get().getShips().size() > 0) {
              return new ResponseEntity<>(makeMap("error", "You already has ships"), HttpStatus.UNAUTHORIZED);
 
          }
+         ships.stream().forEach( ship ->  {
+             gamePlayer.get().addShip(ship);
+         });
 
-        return null;
+
+         gamePlayerRepository.save(gamePlayer.get());
+         return new ResponseEntity<>(makeMap("access", "You created the ships "), HttpStatus.CREATED);
+
+
      }
     private boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;
