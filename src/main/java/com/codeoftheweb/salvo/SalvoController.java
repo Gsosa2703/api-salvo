@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -34,7 +35,7 @@ public class SalvoController {
     @Autowired
     private ShipRepository shipRepository;
 
-
+///POST PARA CREAR JUEGOS
     @RequestMapping("games")
     public Map<String, Object> Games(Authentication authentication) {
         Map<String, Object> dto = new LinkedHashMap<>();
@@ -54,7 +55,7 @@ public class SalvoController {
         return dto;
     }
 
-
+//POST PARA CREAR UN USER
     @PostMapping( "players")
     public ResponseEntity<Object> createUser(@RequestParam String userName, @RequestParam String password, @RequestParam String name) {
 
@@ -72,6 +73,8 @@ public class SalvoController {
 
 
     }
+
+    //POST PARA CREAR JUEGOS Y  UNIRTE
 
     @PostMapping("games/{id}/players")
     public ResponseEntity<Object> joinGame (@PathVariable Long id, Authentication auth ){
@@ -113,6 +116,7 @@ public class SalvoController {
         }
     }
 
+    // MAPPING PARA GAME VIEW
     @RequestMapping("game_view/{id}")
     public ResponseEntity<Map<String, Object>> gpGame(@PathVariable Long id,
                                                       Authentication auth) {
@@ -125,6 +129,8 @@ public class SalvoController {
         }
         return new ResponseEntity<>( gamePlayer.get().gameViewDTO(), HttpStatus.OK);
     }
+
+    //POST PARA CREAR SHIPS
      @PostMapping("games/players/{gamePlayerId}/ships")
      public ResponseEntity <Map<String, Object>> Ships (Authentication auth, @PathVariable Long gamePlayerId,@RequestBody List<Ship> ships){
          if (isGuest(auth)) {
@@ -132,6 +138,10 @@ public class SalvoController {
          }
          Player playerLog = playerRepository.findByUserName(auth.getName());
          Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
+
+         if (gamePlayer.get() == null) {
+             return new ResponseEntity<>(makeMap("ERROR", "No GamePlayer found for you"), HttpStatus.UNAUTHORIZED);
+         }
 
          if (playerLog.getId() != gamePlayer.get().getPlayer().getId()) {
              return new ResponseEntity<>(makeMap("error", "No tiene acceso"), HttpStatus.UNAUTHORIZED);
@@ -150,6 +160,37 @@ public class SalvoController {
 
 
      }
+
+     // POST PARA CREAR SALVOES
+
+     @PostMapping("games/players/{gamePlayerId}/salvos")
+     public ResponseEntity<Map<String,Object>> Salvoes(Authentication auth, @PathVariable Long gamePlayerId, @RequestBody Salvo salvo) {
+        if (isGuest(auth)){
+            return new ResponseEntity<> (makeMap("error", "You have to be logged for sign in"), HttpStatus.UNAUTHORIZED);
+        }
+        Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
+        Player playerLogged = playerRepository.findByUserName(auth.getName());
+        Optional <GamePlayer> opponent = gamePlayer.get().getGame().getGamePlayers().stream().filter(gp -> gp.getPlayer().getId() != playerLogged.getId())
+         if (!gamePlayer.isPresent()) {
+             return new ResponseEntity<>(makeMap("error", "Game player does not exist"), HttpStatus.UNAUTHORIZED);
+         }
+
+        if (gamePlayer.get().getPlayer().getId() != playerLogged.getId()) {
+            return new ResponseEntity <> (makeMap("error", "You are not the user"), HttpStatus.UNAUTHORIZED);
+        }
+
+
+             if (gamePlayer.get().getSalvoes().stream().anyMatch(s -> s.getTurn() == salvo.getTurn())) {
+             return new ResponseEntity<>(makeMap("error", "This turn has already salvoes"), HttpStatus.FORBIDDEN);
+         }
+
+         gamePlayer.get().addSalvoes(salvo);
+         gamePlayerRepository.save(gamePlayer.get());
+         return new ResponseEntity<>(makeMap("Success", "CREATED"), HttpStatus.CREATED);
+     }
+
+
+     // METODOS ADICIONALES
     private boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;
 

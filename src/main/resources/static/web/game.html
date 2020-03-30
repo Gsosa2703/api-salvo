@@ -2,111 +2,90 @@
 <html lang="en">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <title>Ship Locations!</title>
+  <link rel="stylesheet" href="bootstrap4/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@1.1.0/dist/gridstack.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@1.1.1/dist/gridstack-extra.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Carter+One" />
+  <link rel="stylesheet" href="sweetalert2.min.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
   <div id="app">
+    <header class="row header ">
+      <p id="titulo1" class="col-6 titulo"> Choose your boat fleet </p>
+      <p id="titulo2" class="col-6 titulo">Shoot to your opponent </p>
+      <p id="players" class="col-6"> Players : {{player.name}} <span class="current"> VS </span> {{oponent.name}}</p>
+    </header>
 
-    <h1 id="titulo"> Players </h1>
-    <p id="players"> <span class="current"> {{player.email}}</span> VS {{oponent.email}}</p>
-    <table id="tabla-ship" ondrop="drop(event)" ondragover="allowDrop(event)">
-      <thead>
-        <tr>
-          <td class="celda-vacia"></td>
-          <td v-for="number in numbers" v-bind:id="number">{{number}}</td>
-        </tr>
-
-      </thead>
-
-      <tbody id="td">
-        <tr v-for="letter in letters" v-bind:id="letter">
-          <td id="letra"> {{letter}}</td>
-          <td v-for="number in numbers" v-bind:id="letter+number"></td>
-        </tr>
-      </tbody>
-
-    </table>
-    <table id="tabla-salvo">
-      <thead>
-        <tr>
-          <td class="celda-vacia"></td>
-          <td v-for="number in numbers"> {{number}}</td>
-
-        </tr>
-      </thead>
-      <tbody>
-
-        <tr v-for="letter in letters">
-          <td>{{letter}}</td>
-          <td v-for="number in numbers" v-bind:id="letter+number+'s'"></td>
+    <div class="container">
 
 
-        </tr>
-      </tbody>
+      <div class="row adentro">
 
-    </table>
+        <section id="myfleet" class="col-6">
+          <h1>Your Fleet</h1>
+          <div id="grid">
+            <div class="grid-stack grid-stack-10 ">
+
+            </div>
+
+          </div>
+
+          <div class="intructions">
+            <p>
+
+            </p>
+
+          </div>
+        </section>
 
 
-  </div>
+        <section id="tableSalvoes" class="col-6">
+          <h1>Your shoots</h1>
+          <table id="tabla-salvo">
+            <thead>
+              <tr>
+                <td class="celda-vacia"></td>
+                <td v-for="number in numbers"> {{number}}</td>
 
-  <div class="grid">
-  
-    <div class="item carrier" id="drag5" draggable="true" ondragstart="drag(event)">
-      <div class="item-content carrier" >
-        <!-- Safe zone, enter your custom markup -->
-      <p>Carrier</p>
-        <img src="css/naves/carrier.png" id="carrier" alt="carrier">
+              </tr>
+            </thead>
+            <tbody>
 
-        <!-- Safe zone ends -->
+              <tr v-for="letter in letters">
+                <td>{{letter}}</td>
+                <td v-for="number in numbers" v-bind:id="letter+number" onclick="guardarSalvoLocations(id)"></td>
+
+
+              </tr>
+            </tbody>
+
+          </table>
+        </section>
       </div>
-    </div>
 
-    <div class="item battleship" id="drag1" draggable="true" ondragstart="drag(event)">
-      <div class="item-content battleship">
-        <p>Battleship</p>
-        <!-- Safe zone, enter your custom markup -->
-        <img src="css/naves/battleship.png" id="battleship" alt="battleship" >
+
+      <div class="row header fixed-bottom justify-content-center">
+        <button type="button" class="buttonShips  btn btn-dark col-2" id="buttonShips">Save your Ships!</button>
+        
+
+        <button type="button" class="buttonSalvo  btn btn-dark col-2" id="buttonSalvo" onclick="buttonSalvoes()">Shut to your Opponent</button>
       </div>
-    </div>
 
-    <div class="item submarine" id="drag2" draggable="true" ondragstart="drag(event)">
-      <div class="item-content submarine">
-        <!-- Safe zone, enter your custom markup -->
-        Submarine
-        <img src="css/naves/submarin.png" id="submarine" alt="submarine">
 
-        <!-- Safe zone ends -->
-      </div>
-    </div>
 
-    <div class="item destroyer" id="drag3" draggable="true" ondragstart="drag(event)">
-      <div class="item-content destroyer">
-        <!-- Safe zone, enter your custom markup -->
-
-        Destroyer
-        <img src="css/naves/destroyer.png" id="destroyer" alt="destroyer">
-        <!-- Safe zone ends -->
-      </div>
-    </div>
-    <div class="item patrol"id="drag4" draggable="true" ondragstart="drag(event)">
-      <div class="item-content patrol">
-        Patrol Boat
-        <!-- Safe zone, enter your custom markup -->
-        <img src="css/naves/patrol.png" id="patrol" alt="patrol-boat">
-        <!-- Safe zone ends -->
-      </div>
     </div>
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/gridstack@1.1.0/dist/gridstack.all.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
-  <script src="https://unpkg.com/web-animations-js@2.3.2/web-animations.min.js"></script>
-  <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
   <script src="scripts/game.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="sweetalert2.all.min.js"></script>
 </body>
 
 </html>

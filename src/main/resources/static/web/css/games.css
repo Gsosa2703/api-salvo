@@ -335,7 +335,7 @@ div.subapartado {
   min-height: 50px;
   background-color: green;
   overflow: hidden;
-  -webkit-transiton: height 0.2s;
+  -webkit-transition: height 0.2s;
 }
 
 div.titulo {
