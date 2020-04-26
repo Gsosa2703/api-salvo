@@ -1,23 +1,208 @@
 body {
-
-
-  background: url("login.jpg") no-repeat center center fixed;
+  background: url("naves/login.jpg") no-repeat center center fixed;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 100%;
   width: 100%;
 }
 
-.tablaGames {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  font-family: fantasy;
-  font-size: 18px;
-  height: 280px;
+/*HEADER */
+
+nav {
+  text-align: right;
+  padding: 30px 10px 0 0;
 
 }
 
+nav > a {
+  color: #fff;
+  font-weight: bold;
+  font-family: 30px;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+nav > a:hover {
+  text-decoration: underline;
+}
+
+nav > img {
+  height: 50px;
+  width: 50px;
+}
+
+#div-logOut {
+  font-family: Luckiest Guy;
+
+}
+
+.contenedor-welcome {
+  width: 600px;
+}
+
+
+.logOut {
+
+
+  height: 500px;
+  /* background: #3E5151; 
+    /* fallback for old browsers */
+  /*background: -webkit-linear-gradient(rgba(255,255,255,0), rgba(16, 32, 49, 1 )), url(login.jpg);
+    /* Chrome 10-25, Safari 5.1-6 */
+  /*background: linear-gradient(rgba(255,255,255,0), rgba(16, 32, 49, 1 )), url(login.jpg);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: url("naves/login.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.logOut:before {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  z-index: 2;
+  width: 100%;
+  height: 100px;
+  left: 0;
+  background: linear-gradient(180deg, transparent, rgba(16, 32, 49, .45), rgba(16, 32, 49, .9), #102031);
+}
+
+.logOut:after {
+
+  content: "";
+  position: absolute;
+  bottom: -150px;
+  z-index: 2;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(180deg, #102031, rgba(16, 32, 49, .8), rgba(16, 32, 49, .4), transparent);
+
+}
+
+.welcome {
+  display: flex;
+  height: 300px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-size: 70px;
+  letter-spacing: 5px;
+
+}
+
+
+
+
+.button-logOut {
+  display: none;
+  text-align: center;
+}
+
+
+/*CONTENEDOR LISTA Y TABLA LEADERBOARD*/
+.contenedor-tabla {
+  background: #102031;
+  height: 100%;
+  padding-bottom: 20px;
+
+}
+
+.contenedor-lista {
+  width: 900px;
+  background: white;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.list-group-item {
+  background: #102031;
+  color: white;
+
+}
+
+.button-Join {
+  background: #0f0c29;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: white;
+
+}
+
+.btn {
+  background: #0f0c29;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: white;
+  width: 100%;
+  border: solid 1px white;
+
+
+}
+
+.div-img > img {
+  width: 100%;
+  height: 100%;
+}
+
+.div-img {
+  width: 75%;
+
+  margin-bottom: 10px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, .5);
+}
+
+#lista {
+
+  width: 500px;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+
+}
+
+.list {
+  margin-left: 100px;
+  width: 400px;
+}
+
+#titulo-lista {
+  color: #102031;
+  font-family: Luckiest Guy;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 60px;
+}
+
+.tablaGames {
+  background: white;
+  padding: 20px;
+  font-family: fantasy;
+  font-size: 18px;
+  height: 230px;
+  width: 300px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  border-collapse: collapse;
+  border-radius: 10px 10px 0 0;
+
+}
+
+.interface-grande {
+  margin-top: 0;
+  display: flex;
+  justify-content: space-evenly;
+}
 
 .tablaGames td {
   border: 1px solid #ddd;
@@ -32,6 +217,26 @@ body {
   background-color: lightgray;
 }
 
+.titulo-leader {
+  color: white;
+  font-size: 50px !important;
+  font-family: Luckiest Guy;
+}
+
+.titulo-welcome {
+  text-align: center;
+  color: white;
+  font-size: 50px !important;
+  font-family: georgia;
+
+}
+
+#parrafo-leader {
+
+  color: white;
+  font-size: 30px !important;
+  font-family: Luckiest Guy;
+}
 
 #tr,
 #tr2 {
@@ -55,12 +260,13 @@ h2 {
 #divRegister {
   margin: 150px;
   margin-left: 180px;
+  margin-top: 100px;
 }
 
 .logIn {
-  width: 65%;
+  width: 70%;
   height: 40%;
-  padding: 100 px;
+  padding: 50px;
 }
 
 .imagen-logIn {
@@ -71,10 +277,10 @@ h2 {
   padding: 10x;
 }
 
-img {
+.img {
   margin-top: 80px;
-  height: 130px;
-  width: 560px;
+  height: 150px;
+  width: 100%;
 
 
 }
@@ -116,33 +322,6 @@ input {
   color: black;
 }
 
-#div-logOut {
-  font-family: Luckiest Guy;
-  font-size: 30px;
-  color: white;
-  text-align: center;
-
-}
-
-.logOut {
-  background: black;
-  width: 100%;
-  height: 45px;
-}
-
-#button-logOut {
-  margin: auto;
-  background: lightgray;
-  color: black;
-  border-color: black;
-  font-weight: bold;
-  width: 100px;
-}
-
-.button-logOut {
-  display: none;
-  text-align: center;
-}
 
 .circle {
 
@@ -166,19 +345,7 @@ input {
   color: white;
 }
 
-#lista {
-  background: linear-gradient(to bottom right, #144280, white);
-  width: 350px;
-  font-family: sans-serif;
-  font-weight: bold;
-  font-size: 18px;
-  border-radius: 15px;
-  padding: 15px;
-}
 
-#titulo-lista {
-  color: white;
-}
 
 #button-crearJuego {
   width: 50%;
@@ -204,92 +371,117 @@ input {
   margin-top: 50px;
 }
 
-@media screen and (min-width: 200px) and (max-width: 990px) {
+/* FOOTER */
+
+footer {
+  background: #102031;
+  padding: 10px 0 30px 0;
+  margin: auto;
+  overflow: hidden;
+}
+
+.contenedor-footer {
+  display: flex;
+  width: 90%;
+  height: 180px;
+  justify-content: space-evenly;
+  margin: auto;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #ccc;
+    background: url("naves/1line_ships_eu.png") ;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+
+}
+
+.content-foo {
+  text-align: center;
+}
+
+.content-foo h2 {
+  color: white;
+  border-bottom: 3px solid #144280;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.content-foo p {
+  color: #ccc;
+}
+
+@media screen and (min-width: 200px) and (max-width: 900px) {
   #div-logOut {
-    font-size: 18px;
+    font-size: 30px;
     text-align: center;
-    margin-top: 15px;
-
-
   }
-}
 
-@media screen and (min-width: 200px) and (max-width: 990px) {
   .logOut {
-    height: 70px;
+    height: 350px;
     text-align: center;
-
-
   }
-}
 
-@media screen and (min-width: 200px) and (max-width: 990px) {
+  .logOut:before {
+    height: 50px;
+  }
+
+  .logOut:after {
+    bottom: -50px;
+    height: 50px;
+  }
+
+  .welcome {
+    display: flex;
+    height: 300px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
   .interface-grande {
     display: none;
-
-
-    background: url("login.jpg") no-repeat center center fixed;
+    background: url("naves/login.jpg") no-repeat center center fixed;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     height: 100%;
     width: 100%;
   }
-}
 
-@media screen and (min-width: 200px) and (max-width: 990px) {
-  #divRegister {}
-}
-
-@media screen and (min-width: 200px) and (max-width: 990px) {
-  body {
-    background: none;
-  }
-}
-
-@media screen and (min-width: 200px) and (max-width: 990px) {
   .landscape-circle {
+    height: 200px;
+    padding: 20px;
+    padding-top: 40px;
     display: block;
-    background: #144280;
+    background: #102031;
     font-family: Luckiest Guy;
     font-size: 18px;
     color: white;
     text-align: center;
-    width: 100%;
+
   }
 
-}
-
-@media screen and (min-width: 200px) and (max-width: 990px) {
   .texto-circle {
     font-family: georgia;
     font-size: 12px;
-
   }
-}
 
-@media screen and (min-width: 200px) and (max-width: 990px) {
   .img-landscape {
     display: block;
     width: 100%;
     height: 300px;
     margin-top: 0px;
-
   }
 
-}
-
-
-
-@media screen and (min-width: 200px) and (max-width: 990px) {
   .acordeon-responsive {
     display: block;
-
   }
 
-}
+  .img {
+    margin-top: 30px;
+  }
 
-
-@media screen and (min-width: 200px) and (max-width: 990px) {
   .formulario {
     width: 400px;
     height: 350px;
@@ -300,11 +492,8 @@ input {
     font-family: fantasy;
     color: blue;
     font-size: 18px;
-
   }
-}
 
-@media screen and (min-width: 200px) and (max-width: 990px) {
   .imagen-logIn {
     background: lightblue;
     opacity: 0.8;
@@ -312,21 +501,39 @@ input {
     height: 200px;
     padding: 10x;
   }
+
+  #divRegister {
+    margin: 50px;
+    margin-left: 20px;
+  }
+
+  .list {
+    margin-left: 0px;
+  }
+
+  .content-foo h2 {
+    font-size: 15px;
+  }
+  
+  .logIn {
+    width: 90%;
+  }
+
+
 }
 
-@media screen and (min-width: 200px) and (max-width: 990px){
-#divRegister {
-  margin: 50px;
-  margin-left: 70px;
-}
-}
+
+
+
+
+
 
 .acordeon-responsive {
-
+  background: #102031;
   width: 100%;
   min-height: 50px;
   overflow: hidden;
-  border-radius: 5px;
+
 }
 
 

@@ -2,12 +2,15 @@
 $(document).ready(function () {
   $("#button-register").click(function () {
     $("#form-logIn").hide();
+    
   })
   $("#button-register").click(function () {
     $("#form-register").show();
   })
 
+
 });
+
 
 
 //funcion para loguearse 
@@ -29,6 +32,7 @@ function login() {
       console.log("you are login");
       //Recargo la pagina 
       location.reload();
+      
 
     }).fail(function () {
       alert("username or password incorrect")
@@ -103,8 +107,8 @@ function interface(player) {
 
   } else {
     var divLogOut = "";
-    divLogOut = "<p class=welcome>" + "Welcome to The Battle Ship" + " " + player.name + "</p>";
-    document.getElementById("div-logOut").innerHTML += divLogOut;
+    divLogOut = "<p class=titulo-welcome>"  + "Welcome to the Battleship "+ player.name + "</p>"  + "<h2 class=titulo-leader>Leaderboard</h2>" + " <p id=parrafo-leader>Be the first one!</p>";
+    document.getElementById("tabla-pantalla").innerHTML += divLogOut;
     //funcion para hacer aparecer el log Out
     $(document).ready(function () {
       setTimeout(function () {
@@ -131,11 +135,10 @@ $.ajax({
       console.log("Logueate para que disfrutes!!")
     } else {
       var valor = '';
-
-      console.log(playerLogged);
+      
       for (var i = 0; i < data.length; i++) {
 
-        valor += "<li>" + data[i].created + "<ul>" + "<h2 class=player>" + "Players:" + "</h2>";
+        valor += "<li class=list-group-item>" + data[i].created + "<ul>" + "<h2 class=player>" + "Players:" + "</h2>";
 
         var gamePlayers = data[i].gamesPlayers;
 
@@ -151,18 +154,17 @@ $.ajax({
           if (userLog == playerGp) {
             var gpId = gamePlayers[j].id;
 
-            valor += "<li>" + players.email + "</li>" + "<a  class=" + "btn" + "btn-ligth" + " href=" + '/web/game.html?gp=' + gpId + ">" + "Go to a Game" + "</a>"
+            valor += "<li>" + players.email + "</li>" + "<a  class= btn " + " href=" + '/web/game.html?gp=' + gpId + ">" + "Go to Game" + "</a>"
 
           } else if ((userLog != playerGp) && (gamePlayers.length == 1)) {
             var gameId = data[i].id;
-            console.log(gameId);
-            var button = '<input type="button" value="Join into a Game" onclick="joinJuego(' + gameId + ')">';
+            var button = '<input type="button" class= button-Join value="Join into a Game" onclick="joinJuego(' + gameId + ')">';
 
 
             valor += "<li>" + players.email + "</li>" + button
 
           } else {
-            valor += "</ul>" + "<ul>" + "<li>" + players.email + "</li>"
+            valor += "</ul>" + "<ul>" + "<li>" + players.email + "</li>" 
           }
         }
 
@@ -171,6 +173,7 @@ $.ajax({
         $(".list").html(valor);
 
       }
+  document.getElementsByTagName("body")[0].style.background = "none";
 
     }
   }
@@ -268,5 +271,7 @@ $.ajax({
     $(".leaderBoard").html(tabla);
   }
   crearTablaLeaderBoard(ordenMayoraMenor(jsonLeaderboard(data.games)));
-
+  
 });
+
+ 

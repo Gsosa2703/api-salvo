@@ -1,10 +1,55 @@
-table {
-  background-image: url("unnamed.jpg");
+body{
+  background: url("naves/wallpapersden.com_world-of-warships-sinking-ship_1920x1200.jpg") no-repeat center center fixed;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  display: inline-block;
-  margin: 50px;
+  height: 100%;
+  width: 100%;
+}
 
+/*GRID SHIPS */
+
+.instructions {
+  width: 50%;
+  height: 30%;
+}
+
+
+.list-group-item {
+  background-color: hsla(0, 0%, 0%, 0.8);
+  width: 370px;
+  height: 70px;
+}
+
+.list-group-item.active {
+  background-color: hsla(0, 0%, 0%, 0.8);
+  border: solid 1px black;
+
+}
+
+.list-group {
+  margin-left: 100px;
+}
+
+.nave {
+  width: 120px;
+  height: 50px;
+}
+
+
+.hits {
+  background: white;
+
+}
+
+.parrafo-ships {
+  color: white;
+  font-family: georgia;
+  font-size: 15px;
+
+}
+
+#section-hits {
+  display: none;
 }
 
 #tableSalvoes {
@@ -13,6 +58,8 @@ table {
 
 #myfleet {
   display: inline-block;
+  height: 520px;
+  width: 450px;
 }
 
 #buttonSalvo {
@@ -20,26 +67,89 @@ table {
 }
 
 #grid {
-  background-image: url("image5.png");
+  background-image: url("naves/image5.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 450px;
   width: 450px;
   margin: 50px;
-  padding-left: 49px;
-  padding-top: 49px;
+  padding-left: 46px;
+  padding-top: 44px;
 
 
 }
 
 .grid-stack {
-  height: 400px !important;
-  width: 380px !important;
+  width: 390px;
 }
+
 
 .grid-stack-item {
   width: 100%;
 
+}
+
+.hit {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  background-image: url("naves/x.gif");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border: solid 2px red;
+}
+
+.shipsSunken{
+  display: none;
+ background:  hsla(6, 90%, 46%, 0.8);
+  font-weight: bold;
+  border: solid 2px red;
+  border-radius: 10px;
+  height: 100%;
+  color: white;
+  text-align: center;
+  justify-content:flex-end;
+  align-content: flex-end;
+}
+
+/* SECTION SHIPS SUNKEN */
+
+#sunken{
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  margin-top: 200px;
+  height: 281px;
+  width: 500px;
+  margin-left: 400px;
+  
+}
+
+
+
+.sunken{  
+  text-align: center;
+  background: url("naves/juegos-64.gif");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100%;
+  width: 100%;
+  
+}
+.sunken > p {
+  margin-top: 50px;
+  color: white;
+  font-size: 20px;
+}
+
+/*SALVOES*/
+
+.td-sunken {
+  text-align: center;
+  background: #FF4A4A;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .titulo {
@@ -68,41 +178,39 @@ table {
   font-weight: bold;
 }
 
-h1{
+h1 {
   font-family: Carter One;
   text-align: center;
-  
-}
-.alert {
-  display: none;
-  background-color: hsl(0, 100%, 25%, 0.9);
-  height: 170px;
-  width: 220px;
-  font-family: Carter One;
-  font-size: 20px;
-  text-align: center;
+  color: white;
 
 }
+
+
 
 .current {
   font-size: 30px;
 }
 
-td {
-  border: solid 1px black;
+.td {
+
   width: 40px;
   height: 40px;
+  text-align: center;
+  border: solid 2px white;
+  font-weight: bold;
   color: white;
+
+}
+
+.td:hover {
+  border: solid 3px blue;
 }
 
 .celda-vacia {
   border: #B621B1;
 }
 
-.tdColoreado {
-  background: darkblue;
-  border-radius: 6px;
-}
+
 
 .tdSalvoes {
   background: radial-gradient(red, transparent);
@@ -119,71 +227,75 @@ td {
 }
 
 #tabla-salvo {
-  background-image: url("imaages2.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  display: inline-block;
-
+  background: hsla(6, 7%, 64%, 0.7);
+  margin-left: 49px;
+  margin-top: 49px;
 }
 
-td {
-  text-align: center;
-  border: solid 2px white;
+
+.celdasTiroteadas {
+  background-image: url("naves/fuego.gif");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border: solid 3px red !important;
+}
+
+td{
+  color:white;
   font-weight: bold;
 }
 
-.celdasTiroteadas {
-  background-image: url("fuego.gif");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
+/*HEADER*/
 
 .header {
   background-color: hsla(0, 0%, 0%, 0.8);
   height: 50px;
-  width: 100%;
+  margin-left: 0px;
+  display: flex;
+}
+
+.stateGame {
+
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 15px;
+  color: white;
+
+}
+
+.stateGame > p {
+  background: hsla(0, 0%, 0%, 0.8);
+  border-radius: 10px;
+  width: 280px;
+ padding: 15px;
 }
 
 .adentro {
+  padding-bottom: 50px;
   margin-top: 50px;
   width: 100%;
 }
 
-
-.item {
-  display: block;
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  margin: 5px;
-  z-index: 1;
-  color: black;
-  padding: 20px;
-}
-
-.item.muuri-item-dragging {
-  z-index: 3;
-}
-
-.item.muuri-item-releasing {
-  z-index: 2;
-}
-
-.item.muuri-item-hidden {
-  z-index: 0;
-}
-
-.item-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  color: black;
-  text-align: center;
-  font-size: 20px;
+.section-hits {
+  margin-bottom: 50px;
 }
 
 
+
+.button {
+  width: 160px;
+  height: 50px;
+  font-size: 15px;
+  font-weight: bold;
+  background: #136a8a;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #267871, #136a8a);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #267871, #136a8a);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
 
 .carrierHorizontal {
 
@@ -244,6 +356,7 @@ td {
   background-image: url("naves/battleshipVer.png");
   background-repeat: no-repeat;
   background-size: 100% 200px;
+  left: 0px !important;
 
 }
 
@@ -254,6 +367,7 @@ td {
   background-image: url("naves/carrierVer.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  left: 0px !important;
 
 }
 
@@ -264,6 +378,7 @@ td {
   background-image: url("naves/destroyerVer.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  left: 0px !important;
 
 }
 
@@ -274,6 +389,7 @@ td {
   background-image: url("naves/patrolVer.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  left: 0px !important;
 
 }
 
@@ -284,5 +400,84 @@ td {
   background-image: url("naves/submarinVer.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-
+  left: 0px !important;
 }
+
+
+@media screen and (min-width: 200px) and (max-width: 990px) {
+  .header {
+    height: 70px;
+
+  }
+    .header > div {
+    margin-left: 10px;
+    margin-right: 60px;
+  }
+    .titulo {
+    font-size: 18px;
+    margin-bottom: 0px;
+    letter-spacing: 2px;
+  }
+    #players {
+    font-size: 15px;
+    width: 50%;
+    font-weight: none;
+  }
+}
+
+
+
+
+@media screen and (min-width: 200px) and (max-width: 769px) {
+  #tabla-salvo {
+    margin-left: 10px;
+    margin-top: 20px;
+    width: 420px;
+    height: 400px;
+
+  }
+    #grid {
+
+    margin: 0px;
+    margin-left: 0px;
+    padding-left: 46px;
+    padding-top: 46px;
+
+  }
+    .list-group {
+    margin-left: 30px;
+
+  }
+
+    .instructions {
+    margin-top: 40px;
+    width: 350px;
+    height: 50%;
+  }
+
+  #sunken{
+    margin-left: 10px;
+    width: 400px;
+  }
+}
+
+@media screen and (min-width: 770px) and (max-width: 990px) {
+  #tabla-salvo {
+    margin: 0px;
+    margin-left: 70px;
+
+  }
+    #grid {
+    margin: 0px;
+    margin-left: 70px;
+
+  }
+    #sunken{
+    margin-left: 100px;
+    width: 500px;
+  }
+ 
+}
+
+
+

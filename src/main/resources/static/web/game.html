@@ -9,71 +9,242 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@1.1.0/dist/gridstack.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@1.1.1/dist/gridstack-extra.css" />
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Carter+One" />
-  <link rel="stylesheet" href="sweetalert2.min.css">
+
   <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
   <div id="app">
-    <header class="row header ">
-      <p id="titulo1" class="col-6 titulo"> Choose your boat fleet </p>
-      <p id="titulo2" class="col-6 titulo">Shoot to your opponent </p>
-      <p id="players" class="col-6"> Players : {{player.name}} <span class="current"> VS </span> {{oponent.name}}</p>
-    </header>
+    <section id="sunken">
+      <div class="sunken">
+        <audio src="css/naves/explosion.mp3" id="explosion"></audio>
+        <p>CONGRATULATIONS YOU DESTROY A WARSHIP!!!</p>
 
-    <div class="container">
+      </div>
+    </section>
+
+    <div class="container-fluid" id="fluid">
+      <header class="row cabecera justify-content-center">
+        <div class="header col-12">
+          <p id="titulo1" class="titulo"> Choose your boat fleet </p>
+          <p id="titulo2" class=" titulo">Shoot to your opponent </p>
+          <p id="players"> Players : {{player.name}} <span class="current"> VS </span> {{oponent.name}}</p>
+        </div>
+        <div class="stateGame col-12 ">
+          <p> Game State : {{stateGame}}</p>
+        </div>
+        <div class="shipsSunken align-self-end" id="alert">
+          <p id="p-sunken"></p>
+        </div>
+        <div v-show="stateGame == 'YOU_WON' || stateGame == 'YOU_LOST' || stateGame == 'BOTH_TIE'">
+          <template v-if="stateGame == 'YOU_WON'">
+            <div class="gameOver">
+              <p>Game Over, YOU WIN!!!</p>
+              <audio src="css/naves/win.mp3" autoplay></audio>
+            </div>
+          </template>
+          <template v-if="stateGame == 'YOU_LOST'">
+            <div class="gameOver">
+              <p>Game Over, YOU LOST. TRY IT AGAIN :)</p>
+              <audio src="css/naves/lost.mp3" autoplay></audio>
+            </div>
+          </template>
+          <template v-if="stateGame == 'BOTH_TIE'">
+            <div class="gameOver">
+              <p>Game Over, YOU LOST. TRY IT AGAIN :)</p>
+              <audio src="css/naves/win.mp3" autoplay></audio>
+            </div>
+          </template>
+        </div>
 
 
-      <div class="row adentro">
 
-        <section id="myfleet" class="col-6">
+      </header>
+
+
+      <section class="row adentro ">
+
+        <div id="myfleet" class="col-lg-6 col-sm-12 ">
+
           <h1>Your Fleet</h1>
           <div id="grid">
-            <div class="grid-stack grid-stack-10 ">
+            <div class="grid-stack grid-stack-10 " id="grid-ships">
 
             </div>
 
           </div>
+        </div>
+        <div class="col-lg-6 col-sm-12  instructions" id="instructions">
 
-          <div class="intructions">
-            <p>
-
-            </p>
-
+          <div class="list-group">
+            <h1>War Ships</h1>
+            <p class="parrafo-ships">Position each vertical or horizontal war ship on the grid </p>
+            <a href="#" class="list-group-item list-group-item-action active">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Patrol Boat</h5>
+                <img src="css/naves/patrol.png" class="nave" alt="patrol">
+                <small>2 length</small>
+              </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action active">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Destroyer</h5>
+                <img src="css/naves/destroyer.png" class="nave" alt="destroyer">
+                <small>3 length</small>
+              </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action active">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Submarine</h5>
+                <img src="css/naves/submarin.png" class="nave" alt="submarine">
+                <small>3 length</small>
+              </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action active">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Battleship</h5>
+                <img src="css/naves/battleship.png" class="nave" alt="destroyer">
+                <small>4 length</small>
+              </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action active">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Carrier</h5>
+                <img src="css/naves/carrier.png" class="nave" alt="destroyer">
+                <small>5 length</small>
+              </div>
+            </a>
           </div>
-        </section>
 
+        </div>
 
-        <section id="tableSalvoes" class="col-6">
-          <h1>Your shoots</h1>
+        <section id="tableSalvoes" class="col-lg-6 col-sm-12 ">
+          <h1>Your shots</h1>
+
           <table id="tabla-salvo">
             <thead>
               <tr>
-                <td class="celda-vacia"></td>
-                <td v-for="number in numbers"> {{number}}</td>
+                <td class="celda-vacia td"></td>
+                <td v-for="number in numbers" class="td"> {{number}}</td>
 
               </tr>
             </thead>
             <tbody>
 
               <tr v-for="letter in letters">
-                <td>{{letter}}</td>
-                <td v-for="number in numbers" v-bind:id="letter+number" onclick="guardarSalvoLocations(id)"></td>
-
-
+                <td class="td">{{letter}}</td>
+                <td v-for="number in numbers" v-bind:id="letter+number" onclick="guardarSalvoLocations(id)" class="td"></td>
               </tr>
             </tbody>
 
           </table>
-        </section>
-      </div>
 
+        </section>
+
+
+      </section>
+
+      <section class="section-hits row " id="section-hits">
+
+        <div class=" col-12 col-md-6 " v-show="hitsOpponent.length > 0">
+          <div class="table-responsive">
+            <table class="table p-3">
+              <thead class="thead-dark">
+                <tr>
+                  <th rowspan="2" scope="col">Turn</th>
+                  <th colspan="3" scope="col">Hits on You</th>
+                </tr>
+                <tr>
+                  <th scope="col">Hits </th>
+                  <th scope="col"> Ship</th>
+                  <th scope="col">Left</th>
+
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr v-for="hit in hitsOpponent">
+                  <template v-if="hit.ships.length > 0">
+                    <td v-for="(value,key) in hit">
+                      <template v-if=" key != 'ships' && key != 'hits' "> {{value}} </template>
+                      <template v-else-if=" key == 'ships'" v-for="value in value ">{{toUpper(value)}} <br> </template>
+
+                      <template v-else> {{value.length}} </template>
+                    </td>
+                  </template>
+                </tr>
+
+
+                <tr>
+
+                  <td colspan="4" class="td-sunken"> Sunken :
+                    <template v-for="ship in shipSunkenOponent.ships"> {{toUpper(ship)}} , </template>
+                  </td>
+
+                </tr>
+
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+
+        <div class=" col-12 col-md-6  " v-show="hitsPlayer.length > 0">
+
+          <div class="table-responsive">
+            <table class="table p-3">
+              <thead class="thead-dark">
+                <tr>
+                  <th rowspan="2" scope="col">Turn</th>
+                  <th colspan="3" scope="col">Hits on Opponent</th>
+                </tr>
+                <tr>
+                  <th scope="col">Hits </th>
+                  <th scope="col"> Ship</th>
+                  <th scope="col">Left</th>
+
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr v-for="hit in hitsPlayer">
+                  <template v-if="hit.ships.length > 0">
+                    <td v-for="(value,key) in hit">
+                      <template v-if=" key != 'ships' && key != 'hits' "> {{value}} </template>
+                      <template v-else-if=" key == 'ships'" v-for="value in value ">{{toUpper(value)}} <br> </template>
+                      <template v-else> {{value.length}} </template>
+
+                    </td>
+                  </template>
+                </tr>
+                <tr>
+
+                  <td colspan="4" class="td-sunken"> Sunken :
+                    <template v-for="ship in shipsunken.ships"> {{toUpper(ship)}} , </template>
+                  </td>
+
+
+                </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
 
       <div class="row header fixed-bottom justify-content-center">
-        <button type="button" class="buttonShips  btn btn-dark col-2" id="buttonShips">Save your Ships!</button>
-        
-
-        <button type="button" class="buttonSalvo  btn btn-dark col-2" id="buttonSalvo" onclick="buttonSalvoes()">Shut to your Opponent</button>
+        <div class="col-2" id="buttonShips">
+          <button type="button" class="buttonShips  button btn btn-dark">Save your Ships!</button>
+        </div>
+        <div class="col-2" id="buttonSalvo">
+          <button type="button" class="buttonSalvo button  btn btn-dark" onclick="buttonSalvoes()">Shut to your Opponent</button>
+        </div>
+        <div class="col-2">
+          <button type="button" class="  button btn btn-dark" onclick="history.back()">Exit Game</button>
+        </div>
       </div>
 
 
@@ -81,11 +252,13 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/gridstack@1.1.0/dist/gridstack.all.js"></script>
+  <script src="scripts/jquery.ui.touch-punch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
   <script src="scripts/game.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-  <script src="sweetalert2.all.min.js"></script>
+
+
 </body>
 
 </html>

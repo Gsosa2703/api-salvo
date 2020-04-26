@@ -1,5 +1,5 @@
 const queryString = window.location.search;
-console.log(queryString);
+
 
 const urlParams = new URLSearchParams(window.location.search);
 const myParam = urlParams.get('gp');
@@ -8,8 +8,9 @@ console.log(myParam);
 var grid = null;
 
 
+var mensajeError = {};
 
-
+crearJson();
 
 function crearJson() {
   fetch("/api/game_view/" + myParam, )
@@ -18,21 +19,37 @@ function crearJson() {
     })
     .then((json) => {
 
+
       obtenerPlayers(json);
+
       app.game_view = json;
       app.shipsCurrentPlayer = app.game_view.ships;
       app.salvoesPlayer = json.salvoes.filter(salvo => salvo.player == app.player.id);
       app.salvoesOponent = json.salvoes.filter(salvo => salvo.player == app.oponent.id);
+      app.hitsPlayer = json.hitsPlayer;
+      app.hitsOpponent = json.hitsOponente;
+      app.sinkPlayer = json.sinksPlayer;
+      app.sinkOpponent = json.sinksOponente;
+      app.stateGame = json.state;
 
-      obtenerShips(json);
-      obtenerSalvoes(json);
+      alertTurn();
+
+      paintSalvoes();
+
       crearGrid();
 
+      hitsOnOpponent();
+
+
+      createHit(app.hitsOpponent);
+
+      //      sunkenShip();
+      sunken();
 
     });
 
 }
-crearJson();
+
 
 // VUE.JS
 var app = new Vue({
@@ -45,6 +62,7 @@ var app = new Vue({
     game_view: [],
     shipsCurrentPlayer: [],
     shipLocalizado: [],
+    id: "",
     salvo: {
       turn: 0,
       salvoLocations: []
@@ -53,11 +71,19 @@ var app = new Vue({
     salvoesOponent: [],
     idSalvoPlayer: 0,
     firstTurn: 1,
+    hitsPlayer: [],
+    hitsOpponent: {},
+    sinkPlayer: [],
+    shipsunken: [],
+    shipSunkenOponent: [],
+    firstSink: [],
+    firstSinkOponent: [],
+    sinkOpponent: [],
+    stateGame: ""
   },
   methods: {
-
-    gamePlayerId: function () {
-
+    toUpper: function (str) {
+      return str[0].toUpperCase() + str.slice(1);
     }
   }
 
@@ -73,8 +99,9 @@ function postShips() {
   }).done(function () {
     location.reload();
 
-  }).fail(function (error) {
-    console.log("Error");
+  }).fail(function (jqXHR, error) {
+    mensajeError = jqXHR.responseText;
+    Swal.fire(mensajeError);
   })
 
 }
@@ -82,6 +109,7 @@ function postShips() {
 
 //FUNCION PARA CREAR GRILLA
 function crearGrid() {
+
   var options = {
     //grilla de 10 x 10
     column: 10,
@@ -160,65 +188,34 @@ function crearGrid() {
       var xShip = 10 - heigthShip;
 
       if ($(this).children().hasClass(idShip + "Horizontal") && y <= yShip && grid.isAreaEmpty(x, y + 1, heigthShip, widthShip)) {
-        console.log(yShip)
-        console.log("vertical")
         grid.resize($(this), heigthShip, widthShip);
         $(this).children().removeClass(idShip + "Horizontal");
         $(this).children().addClass(idShip + "Vertical");
       } else if ($(this).children().hasClass(idShip + "Vertical") && x <= xShip && grid.isAreaEmpty(x + 1, y, heigthShip, widthShip)) {
-        console.log(xShip)
-        console.log("horizontal")
         grid.resize($(this), heigthShip, widthShip);
         $(this).children().addClass(idShip + "Horizontal");
         $(this).children().removeClass(idShip + "Vertical");
       } else {
-        alert("Try another location");
+        Swal.fire("Try another location");
       }
     });
   } else {
 
     options.staticGrid = true;
-    // var letters = cambiarLetraporNumero(app.shipsCurrentPlayer);
+
     dibujarShip(app.shipsCurrentPlayer);
-    show("tableSalvoes");
-    hide("buttonShips");
-    hide("titulo1")
-    show("titulo2")
-    show("buttonSalvo");
-
-    if (app.salvoesPlayer.length == 0) {
-      app.salvo.turn = app.salvoesPlayer.length + 1;
-      Swal.fire({
-        title: "Turn:" + app.firstTurn + ", you can do it!",
-        text: "You can only fire 5 shoots",
-        confirmButtonText: 'Cool'
-      })
-    } else {
-      app.salvo.turn = app.salvoesPlayer.length + 1;
-
-      Swal.fire({
-        title: "Turn:" + app.salvo.turn + ", you can do it!",
-        text: "You can only fire 5 shoots",
-        confirmButtonText: 'Cool'
-      })
-
-    }
+    showAndHide("tableSalvoes", "block");
+    showAndHide("titulo2", "block");
+    showAndHide("buttonSalvo", "block");
+    showAndHide("section-hits", "flex");
+    showAndHide("buttonShips", "none");
+    showAndHide("titulo1", "none");
+    showAndHide("instructions", "none");
 
 
   }
 };
 
-
-
-//Obtengo los ships
-function obtenerShips(json) {
-  var ships = json.ships;
-  for (var i = 1; i < ships.length; i++) {
-    var shipLocations = ships[0].locations.concat(ships[i].locations);
-
-  }
-  return shipLocations;
-}
 
 
 //dibujo los ships que me vienen de la data
@@ -262,7 +259,7 @@ function dibujarShip(ships, letter) {
       widthShip = ship.locations.length;
       heigthShip = 1;
 
-      console.log(xShip);
+
 
       grid.addWidget('<div id="' + ship.type + '"><div class="grid-stack-item-content' + " " + ship.type + 'Horizontal"></div></div>', {
         width: widthShip,
@@ -314,7 +311,7 @@ $(".buttonShips").click(function () {
     ship.type = $(this)[0].id;
     ship.locations = coordinate;
     app.shipLocalizado.push(ship);
-    console.log(coordinate);
+
 
   });
   postShips();
@@ -326,7 +323,7 @@ $(".buttonShips").click(function () {
 //-------------------------------------------SALVOES-----------------------------------------
 
 //Funcion Post Salvoes
-var mensajeError = {};
+
 
 function postSalvoes(turn, salvoLocations) {
 
@@ -342,11 +339,12 @@ function postSalvoes(turn, salvoLocations) {
       contentType: "application/json"
     }).done(function () {
       location.reload();
-      crearJson();
+
+
 
     }).fail(function (jqXHR, error) {
-      mensajeError = jqXHR.responseText;
-      alert(mensajeError);
+      mensajeError = JSON.parse(jqXHR.responseText);
+      Swal.fire(mensajeError.error);
     })
   } else {
     Swal.fire('Complete the five shoots');
@@ -356,10 +354,11 @@ function postSalvoes(turn, salvoLocations) {
 //Funcion para guardar los salvoLocations y verificar que no seleccione una celda que ya esta seleccionada 
 function guardarSalvoLocations(id) {
 
+  app.id = id;
   if (app.salvo.salvoLocations.length < 5) {
 
 
-    if (app.salvo.salvoLocations.includes(id) == false ) {
+    if (app.salvo.salvoLocations.includes(id) == false) {
 
       app.salvo.salvoLocations.push(id);
       document.getElementById(id).classList.add("salvoesSelect");
@@ -404,52 +403,46 @@ function quitarSalvoLocation(id) {
 //funcion para el click botton salvoes  
 function buttonSalvoes() {
   postSalvoes(app.salvo.turn, app.salvo.salvoLocations);
+
 }
 
-//obtengo y dibujos los salvoes
-
-function obtenerSalvoes(json) {
-
-
+function paintSalvoes() {
   if (app.game_view.gamePlayers.length > 1) {
 
-    paintSalvoes();
-
-
-  } else if (app.game_view.gamePlayers.length == 1) {
-
-    for (let k = 0; k < app.salvoesPlayer.length; k++) {
-      var finalCells = app.salvoesPlayer[k].salvoLocations;
-      finalCells.forEach(salvoLocation => {
-        document.getElementById(salvoLocation).classList.add("tdSalvoes");
+    app.salvoesPlayer.forEach(sp => {
+      sp.salvoLocations.forEach(eachSalvoLocation => {
+        document.getElementById(eachSalvoLocation).classList.add("tdSalvoes");
       })
-    }
-  }
+    })
+    ordenMenoraMayor(app.hitsPlayer);
+    ordenMenoraMayor(app.hitsOpponent);
+    ordenMenoraMayor(app.sinkPlayer);
+    ordenMenoraMayor(app.sinkOpponent);
 
-}
 
-
-
-
-/*
-//dibujo los ships en la grilla
-function dibujarLocations(posiciones) {
-  for (i = 0; i < posiciones.length; i++) {
-    document.getElementById(posiciones[i]).classList.add("tdColoreado");
   }
 }
-*/
-function show(element) {
-  document.getElementById(element).style.display = "block";
+
+//funcion para mostrar y esconder 
+
+function showAndHide(element, style) {
+  document.getElementById(element).style.display = style;
 }
 
-function hide(element) {
-  document.getElementById(element).style.display = "none";
-}
+
+//funcion para ordenar los Scores de mayor a menor 
+function ordenMenoraMayor(el) {
+
+  el.sort(function (a, b) { //ordenamos de mayor a menor
+    return a.turn - b.turn
+  })
+  return el;
+};
 
 //Obtener currentPlayer y oponent
 
 function obtenerPlayers(json) {
+
   var idGamePlayer = json.id;
   var gamePlayers = json.gamePlayers.filter(gamePlayer => gamePlayer.id == idGamePlayer);
   var gamePlayers2 = json.gamePlayers.filter(gamePlayer => gamePlayer.id != idGamePlayer);
@@ -458,12 +451,163 @@ function obtenerPlayers(json) {
   if (gamePlayers2[0] != null) {
     app.oponent = gamePlayers2[0].player;
   }
+
 }
 
-function paintSalvoes() {
-  app.salvoesPlayer.forEach(sp => {
-    sp.salvoLocations.forEach(eachSalvoLocation => {
-      document.getElementById(eachSalvoLocation).classList.add("tdSalvoes");
+function hitsOnOpponent() {
+  app.hitsPlayer.forEach(hit => {
+    hit.hits.forEach(eachHit => {
+      document.getElementById(eachHit).classList.add("celdasTiroteadas")
     })
-  })
+  });
+
 }
+
+function createHit(allHits) {
+
+  for (i = 0; i < allHits.length; i++) {
+
+    var hits = allHits[0].hits.concat(app.hitsOpponent[i].hits);
+
+
+    for (j = 0; j < hits.length; j++) {
+
+      var hit = document.createElement("div")
+      document.getElementById("grid-ships").appendChild(hit);
+      hit.classList.add("hit");
+
+      var marginLeft = 40 * (parseInt(hits[j][1]) - 1);
+
+      var letra = hits[j][0];
+      switch (letra) {
+        case 'A':
+          letra = 1;;
+          break;
+        case 'B':
+          letra = 2;
+          break;
+        case 'C':
+          letra = 3;
+          break;
+        case 'D':
+          letra = 4;
+          break;
+        case 'E':
+          letra = 5;
+          break;
+        case 'F':
+          letra = 6;
+          break;
+        case 'G':
+          letra = 7;
+          break;
+        case 'H':
+          letra = 8;
+          break;
+        case 'I':
+          letra = 9;
+          break;
+        case 'J':
+          letra = 10;
+          break;
+        default:
+
+      }
+      var marginTop = 40 * (letra - 1);
+
+      hit.style.marginLeft = marginLeft + "px";
+      hit.style.marginTop = marginTop + "px";
+
+    }
+  }
+}
+
+function alertTurn() {
+  if (app.stateGame == "FIRE") {
+    if (app.salvoesPlayer.length == 0) {
+      app.salvo.turn = app.salvoesPlayer.length + 1;
+      Swal.fire({
+        title: "Turn:" + app.firstTurn + ", you can do it!",
+        text: "You can only fire 5 shoots",
+        confirmButtonText: 'Cool'
+      })
+    } else {
+      app.salvo.turn = app.salvoesPlayer.length + 1;
+
+      Swal.fire({
+        title: "Turn:" + app.salvo.turn + ", you can do it!",
+        text: "You can only fire 5 shoots",
+        confirmButtonText: 'Cool'
+      })
+
+    }
+  }
+}
+
+function sunken() {
+
+  if (app.game_view.salvoes.length >= 2) {
+
+    app.shipsunken = app.sinkPlayer.pop();
+    app.firstSink = app.sinkPlayer.length;
+    var ultimoShipSunken = app.sinkPlayer[app.sinkPlayer.length - 1];
+    app.shipSunkenOponent = app.sinkOpponent.pop();
+    app.firstSinkOponent = app.sinkOpponent.length;
+    var ultimoShipSunkenOponent = app.sinkOpponent[app.sinkOpponent.length - 1];
+
+    if (app.shipsunken.ships.length > 0 || app.shipSunkenOponent.ships.length > 0) {
+
+      if ((app.firstSink == 0 || app.shipsunken.ships.length != ultimoShipSunken.ships.length) && app.stateGame == "WAIT_OPPONENT_ATTACK") {
+
+        document.getElementById("explosion").setAttribute("autoplay", "autoplay");
+        aparecerYDesaparecer("#sunken");
+       
+
+      } else if ((app.firstSinkOponent == 0 || app.shipSunkenOponent.ships.length != ultimoShipSunkenOponent.ships.length) && app.stateGame == "FIRE") {
+
+        document.getElementById("explosion").setAttribute("autoplay", "autoplay");
+        aparecerYDesaparecer("#alert");
+        var p = document.getElementById("p-sunken");
+        p.innerHTML = "Sorry ships have been sunk";
+
+      }
+    }
+  }
+}
+
+
+
+
+
+function aparecerYDesaparecer(div) {
+  $(document).ready(function () {
+    setTimeout(function () {
+    
+      // Declaramos la capa mediante una clase para ocultarlo
+      $(div).fadeIn(0);
+         document.getElementById("fluid").style.filter = "blur(5px)";
+    }, 0);
+  });
+
+  $(document).ready(function () {
+    setTimeout(function () {
+      // Declaramos la capa  mediante una clase para ocultarlo
+      $(div).fadeOut(1500);
+      // Transcurridos 5 segundos aparecera la capa midiv2
+         document.getElementById("fluid").style.filter = "none";
+    }, 7000);
+  });
+}
+//
+//function mensaje() {
+//
+//  if (app.stateGame == "WAIT_OPPONENT_ATTACK") {
+//    console.log("actualizando");
+//    location.reload();
+//  } else if (app.stateGame == "WAIT_OPPONENT_SHIPS" || app.stateGame == "WAIT_OPPONENT") {
+//    location.reload();
+//  }
+//
+//}
+//
+//setTimeout(mensaje, 15000);

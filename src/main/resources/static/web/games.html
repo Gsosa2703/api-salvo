@@ -12,26 +12,27 @@
 </head>
 
 <body>
-  <div id="div-allGames">
+  <div id="div-allGames" class="container-fluid">
 
     <header class="logOut row">
-      <div class=" animated  bounce col-lg-10">
-        <p id="div-logOut">
+
+      <div class=" animated  bounce col-md-9 col-sm-8 contenedor-welcome">
+        <p class="welcome" id="div-logOut">
+          WORLD OF WARSHIPS
         </p>
       </div>
-      <div class="button-logOut  col-lg-2 animated swing delays-2s">
-        <input type="button" class="btn btn-dark" id="button-logOut" value="Log out" onclick="logOut()">
-      </div>
+      <nav class="col-md-3 col-sm-4">
+        <a href="#" onclick="logOut()"> Log Out</a>
+        <img src="css/naves/sign.png" alt="signin" class="signin">
+      </nav>
+
     </header>
 
-    <section class="interface-responsive">
-      <div>
 
-        <img src="css/login.jpg" alt="barcos" class="img-landscape">
+    <section class="interface-responsive row">
 
-      </div>
 
-      <div class="landscape-circle ">
+      <div class="landscape-circle col-sm-12 ">
         <div>
           <p>Start your own Battleship!</p>
           <p class="texto-circle"> Create a game and shoot your opponent's grid to find and destroy enemy ships before they sink yours </p>
@@ -39,7 +40,7 @@
         </div>
       </div>
 
-      <div class="acordeon-responsive">
+      <div class="acordeon-responsive col-sm-12">
 
         <div class="subapartado">
 
@@ -89,51 +90,77 @@
 
 
     <div class="row justify-content-center interface-grande">
-      <div class="col-6 circulo">
-        <div class="circle ">
-          <p>Start your own Battleship!</p>
-          <p class="texto-circle"> Create a game and shoot your opponent's grid to find and destroy enemy ships before they sink yours </p>
-          <input type="button" class="btn btn-primary" id="button-crearJuego" value="Create a Game" onclick="crearJuego()">
+      <div class="contenedor-tabla col-lg-12">
+        <div class="row">
+          <div class=" circulo col-6 pt-2">
+            <div class="circle ">
+              <p>Start your own Battleship!</p>
+              <p class="texto-circle"> Create a game and shoot your opponent's grid to find and destroy enemy ships before they sink yours </p>
+              <input type="button" class="btn btn-primary button-create" id="button-crearJuego" value="Create a Game" onclick="crearJuego()">
+            </div>
+          </div>
+
+          <div class=" tabla-pantalla col-6 pt-5">
+            <div id="tabla-pantalla">
+            </div>
+            <table class="tablaGames" id="tabla2">
+              <thead>
+                <tr id="tr2">
+                  <td>User Name</td>
+                  <td>Total</td>
+                  <td>Wins</td>
+                  <td>Losses</td>
+                  <td>Tied</td>
+                </tr>
+              </thead>
+              <tbody class="leaderBoard">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="contenedor-lista col-lg-12">
+        <div class="row">
+          <div class="col-6">
+            <div class="div-img"> <img loading="lazy" src="css/naves/img1.jpg" alt="barco"></div>
+            <div class="div-img"> <img loading="lazy" src="css/naves/img2.jpg" alt="barco"></div>
+            <div class="div-img"> <img loading="lazy" src="css/naves/img3.jpg" alt="barco"></div>
+            <div class="div-img"> <img loading="lazy" src="css/naves/img4.jpg" alt="barco"></div>
+            <div class="div-img"> <img loading="lazy" src="css/naves/img5.jpg" alt="barco"></div>
+          </div>
+          <div id="lista col-6">
+            <h1 id="titulo-lista">All Games:</h1>
+            <ol class="list list-group  ">
+
+            </ol>
+          </div>
         </div>
       </div>
 
-      <div class="col-6 tabla-pantalla">
-        <div>
-          <h2 id="titulo-leader">Leaderboard</h2>
-        </div>
-        <table class="tablaGames" id="tabla2">
-          <thead>
-            <tr id="tr2">
-              <td>User Name</td>
-              <td>Total</td>
-              <td>Wins</td>
-              <td>Losses</td>
-              <td>Tied</td>
-            </tr>
-          </thead>
-          <tbody class="leaderBoard">
-          </tbody>
-        </table>
-      </div>
-      <div id="lista">
-        <h1 id="titulo-lista">All Games:</h1>
-        <ol class="list">
-        </ol>
-      </div>
+
     </div>
-
+    <footer class="row">
+      <div class="contenedor-footer col-12">
+        <div class="content-foo">
+          <h2>Gabriela Sosa. Derechos de autor Reservados Copyrigth</h2>
+        </div>
+      </div>
+    </footer>
 
   </div>
+
 
   <div class="logIn row" id="divRegister">
 
     <div class=" col-sm-12 col-lg-8 imagen-logIn">
-      <img src="css/battleship.jpg" alt="battleship" class="img-fluid">
+      <img src="css/naves/battleship.jpg" alt="battleship" class="img-fluid img">
     </div>
     <div class=" col-sm-12 col-lg-4 formulario" id="form-logIn">
       <form>
         <label for="email">User Name:</label><br>
-        <input type="text" id="email" name="email" placeholder="pepe@gmail.com"><br>
+        <input type="email" id="email" name="email" placeholder="pepe@gmail.com"><br>
         <label for="password"> Password:</label><br>
         <input type="password" id="password" name="password" placeholder="***"><br>
         <input type="button" class="btn btn-dark" id="button-logIn" value="Log in" onclick="login()">
@@ -149,7 +176,7 @@
         <label for="name"> Name:</label><br>
         <input type="text" id="name" name="name" placeholder="Pepe"><br>
         <label for="email">User Name:</label><br>
-        <input type="text" id="semail" name="email" placeholder="pepe@gmail.com"><br>
+        <input type="email" id="semail" name="email" placeholder="pepe@gmail.com"><br>
         <label for="password"> Password:</label><br>
         <input type="password" id="spassword" name="password" placeholder="***"><br>
         <input type="button" class="btn btn-dark" value="Register now!" onclick="signIn()">
