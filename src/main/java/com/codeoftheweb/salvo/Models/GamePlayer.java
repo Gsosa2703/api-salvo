@@ -1,4 +1,4 @@
-package com.codeoftheweb.salvo.Models;
+package com.codeoftheweb.salvo.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -30,6 +30,9 @@ public class GamePlayer {
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Salvo> salvoes = new HashSet<>();
 
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Message> messages;
+
     private LocalDateTime joinDate;
 
     GamePlayer() {
@@ -45,20 +48,36 @@ public class GamePlayer {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", id);
         dto.put("player", this.player.toDTO());
+        dto.put("messages",this.messages.stream().map(Message :: toDto).collect(Collectors.toList()));
 
         Score score = getScore();
 
         if (score != null) {
             dto.put("score", score.toDTO());
         } else {
-            dto.put("score", "null");
+            dto.put("score", null);
         }
+
+        Message message = getMessage();
+        if (message != null) {
+            dto.put("message", message.toDto());
+        } else {
+            dto.put("message", null);
+        }
+
+
+
+
         return dto;
     }
 
     public Score getScore() {
         Score score = this.getPlayer().getScore(this.getGame());
         return score;
+    }
+    public Message getMessage(){
+        Message message = this.player.getMessage(this.game);
+        return message;
     }
 
     public Map<String, Object> gameViewDTO() {

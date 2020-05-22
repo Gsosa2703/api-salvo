@@ -1,9 +1,9 @@
-package com.codeoftheweb.salvo.Controllers;
+package com.codeoftheweb.salvo.controller;
 
 
-import com.codeoftheweb.salvo.CONSTANT;
-import com.codeoftheweb.salvo.Models.*;
-import com.codeoftheweb.salvo.Repositories.*;
+import com.codeoftheweb.salvo.AppMessages;
+import com.codeoftheweb.salvo.models.*;
+import com.codeoftheweb.salvo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,15 +65,15 @@ public class SalvoController {
 
 
         if (userName.isEmpty() || password.isEmpty() || name.isEmpty()) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._noName), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.NO_NAME), HttpStatus.FORBIDDEN);
         }
 
         Player player = playerRepository.findByUserName(userName);
         if (player != null) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._userFound), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.USER_FOUND), HttpStatus.CONFLICT);
         }
         player = playerRepository.save(new Player(userName, name, passwordEncoder.encode(password)));
-        return new ResponseEntity<>(makeMap(CONSTANT._idGameP, player.getId()), HttpStatus.CREATED);
+        return new ResponseEntity<>(makeMap(AppMessages.GPID, player.getId()), HttpStatus.CREATED);
 
 
     }
@@ -83,23 +83,23 @@ public class SalvoController {
     @PostMapping("games/{id}/players")
     public ResponseEntity<Object> joinGame(@PathVariable Long id, Authentication auth) {
         if (isGuest(auth)) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._notFound), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.NOT_FOUND), HttpStatus.UNAUTHORIZED);
         } else {
             Player playerLog = playerRepository.findByUserName(auth.getName());
             Optional<Game> game = gameRepository.findById(id);
 
             if (!game.isPresent()) {
-                return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._gameNotFound ), HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.GAME_NOT_FOUND), HttpStatus.FORBIDDEN);
             }
 
             if (game.get().getGamePlayers().size() > 1) {
-                return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._gameFull), HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.GAME_FULL), HttpStatus.FORBIDDEN);
             }
 
             GamePlayer newGamePlayer = gamePlayerRepository.save(new GamePlayer(playerLog, game.get()));
 
 
-            return new ResponseEntity<>(makeMap(CONSTANT._idGameP, newGamePlayer.getId()), HttpStatus.CREATED);
+            return new ResponseEntity<>(makeMap(AppMessages.GPID, newGamePlayer.getId()), HttpStatus.CREATED);
         }
     }
 
@@ -107,13 +107,13 @@ public class SalvoController {
     @PostMapping("games")
     public ResponseEntity<Object> createGame(Authentication auth) {
         if (isGuest(auth)) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._notLogged), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.NOT_LOGGED), HttpStatus.UNAUTHORIZED);
         } else {
             Player playerLog = playerRepository.findByUserName(auth.getName());
             Game newGame = gameRepository.save(new Game(LocalDateTime.now()));
             GamePlayer newGamePlayer = gamePlayerRepository.save(new GamePlayer(playerLog, newGame));
 
-            return new ResponseEntity<>(makeMap(CONSTANT._idGameP, newGamePlayer.getId()), HttpStatus.CREATED);
+            return new ResponseEntity<>(makeMap(AppMessages.GPID, newGamePlayer.getId()), HttpStatus.CREATED);
         }
     }
 
@@ -126,7 +126,7 @@ public class SalvoController {
         Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(id);
 
         if (playerLog.getId() != gamePlayer.get().getPlayer().getId()) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._failUser), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.FAIL_USER), HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>(gamePlayer.get().gameViewDTO(), HttpStatus.OK);
     }
@@ -135,20 +135,20 @@ public class SalvoController {
     @PostMapping("games/players/{gamePlayerId}/ships")
     public ResponseEntity<Map<String, Object>> Ships(Authentication auth, @PathVariable Long gamePlayerId, @RequestBody List<Ship> ships) {
         if (isGuest(auth)) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._notLogged), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.NOT_LOGGED), HttpStatus.UNAUTHORIZED);
         }
         Player playerLog = playerRepository.findByUserName(auth.getName());
         Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
 
         if (gamePlayer.isEmpty() ) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._notFound), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.NOT_FOUND), HttpStatus.UNAUTHORIZED);
         }
 
         if (playerLog.getId() != gamePlayer.get().getPlayer().getId()) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._failUser), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.FAIL_USER), HttpStatus.UNAUTHORIZED);
         }
         if (gamePlayer.get().getShips().size() > 0) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._foundShips), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.FOUND_SHIPS), HttpStatus.UNAUTHORIZED);
 
         }
         ships.stream().forEach(ship -> {
@@ -157,7 +157,7 @@ public class SalvoController {
 
 
         gamePlayerRepository.save(gamePlayer.get());
-        return new ResponseEntity<>(makeMap(CONSTANT.success, CONSTANT._shipSaved), HttpStatus.CREATED);
+        return new ResponseEntity<>(makeMap(AppMessages.success, AppMessages.SHIPS_HAVE_BEEN_SAVED), HttpStatus.CREATED);
 
 
     }
@@ -167,40 +167,40 @@ public class SalvoController {
     @PostMapping("games/players/{gamePlayerId}/salvos")
     public ResponseEntity<Map<String, Object>> Salvoes(Authentication auth, @PathVariable Long gamePlayerId, @RequestBody Salvo salvo) {
         if (isGuest(auth)) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._notLogged), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.NOT_LOGGED), HttpStatus.UNAUTHORIZED);
         }
         Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
         Player playerLogged = playerRepository.findByUserName(auth.getName());
         Optional<GamePlayer> opponent = gamePlayer.get().getGame().getGamePlayers().stream().filter(gp -> gp.getPlayer().getId() != playerLogged.getId()).findFirst();
 
         if (!gamePlayer.isPresent()) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._notFound), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.NOT_FOUND), HttpStatus.UNAUTHORIZED);
         }
 
         if (gamePlayer.get().getPlayer().getId() != playerLogged.getId()) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._failUser), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.FAIL_USER), HttpStatus.UNAUTHORIZED);
         }
         if (gamePlayer.get().getSalvoes().stream().anyMatch(s -> s.getTurn() == salvo.getTurn())) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._turnFound), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.TURN_FOUND), HttpStatus.UNAUTHORIZED);
         }
 
         if (salvo.getTurn() != gamePlayer.get().getSalvoes().size() + 1) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._turnNotFound), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.TURN_NOT_FOUND), HttpStatus.FORBIDDEN);
         }
 
         if (!opponent.isPresent()) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._waitOpponent), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.WAIT_OPPONENT), HttpStatus.FORBIDDEN);
         }
         if (gamePlayer.get().getSalvoes().size() > opponent.get().getSalvoes().size()) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._waitTurn), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.WAIT_TURN), HttpStatus.FORBIDDEN);
         }
 
         String stateGame = gamePlayer.get().getStateGame();
         if (stateGame.equals("YOU_WON") || stateGame.equals("BOTH_TIE") || stateGame.equals("YOU_LOST")) {
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._gameOver ), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.GAME_OVER), HttpStatus.FORBIDDEN);
         }
         if(!stateGame.equals("FIRE")){
-            return new ResponseEntity<>(makeMap(CONSTANT.error, CONSTANT._notSalvoes ), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.NOT_SALVOES), HttpStatus.FORBIDDEN);
         }
 
         gamePlayer.get().addSalvoes(salvo);
@@ -224,7 +224,7 @@ public class SalvoController {
         }
 
 
-        return new ResponseEntity<>(makeMap(CONSTANT.success, CONSTANT._salvoesSaved), HttpStatus.CREATED);
+        return new ResponseEntity<>(makeMap(AppMessages.success, AppMessages.SALVOES_SAVED), HttpStatus.CREATED);
 
 
     }

@@ -1,15 +1,15 @@
-package com.codeoftheweb.salvo.Models;
+package com.codeoftheweb.salvo.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.swing.*;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
 @Entity
 public class Player {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -22,6 +22,9 @@ public class Player {
 
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<Score> scores;
+
+    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
+    private List<Message> messages;
 
     private String Name;
     private String userName;
@@ -66,6 +69,10 @@ public class Player {
     public Score getScore(Game game) {
         Score playerScore = this.scores.stream().filter(score -> score.getGame().equals(game)).findFirst().orElse(null);
         return playerScore;
+    }
+    public Message getMessage(Game game){
+        Message message= this.messages.stream().filter(m -> m.getGame().equals(game)).findFirst().orElse(null);
+        return message;
     }
 
     public void setUserName(String userName) {

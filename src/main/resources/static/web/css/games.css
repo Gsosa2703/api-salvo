@@ -15,7 +15,7 @@ nav {
 }
 
 nav > a {
-  color: #fff;
+color :black ;
   font-weight: bold;
   font-family: 30px;
   text-decoration: none;
@@ -417,7 +417,7 @@ footer {
   }
 
   .logOut {
-    height: 350px;
+
     text-align: center;
   }
 
@@ -509,6 +509,7 @@ footer {
 
   .list {
     margin-left: 0px;
+    width: 100%;
   }
 
   .content-foo h2 {
@@ -522,7 +523,12 @@ footer {
 
 }
 
+@media screen and (min-width: 901px) and (max-width: 1000px){
+    .list {
+    margin-left: 20px;
+  }
 
+}
 
 
 

@@ -1,7 +1,7 @@
 package com.codeoftheweb.salvo;
 
-import com.codeoftheweb.salvo.Models.*;
-import com.codeoftheweb.salvo.Repositories.*;
+import com.codeoftheweb.salvo.models.*;
+import com.codeoftheweb.salvo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,13 +16,15 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class SalvoApplication {
+	
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SalvoApplication.class, args);
-	}
+
+		}
 
 	public class Application extends SpringBootServletInitializer {
 

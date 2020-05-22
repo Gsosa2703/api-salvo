@@ -1,7 +1,7 @@
-package com.codeoftheweb.salvo.Configurations;
+package com.codeoftheweb.salvo.configurations;
 
-import com.codeoftheweb.salvo.Models.Player;
-import com.codeoftheweb.salvo.Repositories.PlayerRepository;
+import com.codeoftheweb.salvo.models.Player;
+import com.codeoftheweb.salvo.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

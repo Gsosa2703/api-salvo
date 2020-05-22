@@ -1,4 +1,4 @@
-body{
+body {
   background: url("naves/wallpapersden.com_world-of-warships-sinking-ship_1920x1200.jpg") no-repeat center center fixed;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -57,9 +57,8 @@ body{
 }
 
 #myfleet {
-  display: inline-block;
+
   height: 520px;
-  width: 450px;
 }
 
 #buttonSalvo {
@@ -70,19 +69,13 @@ body{
   background-image: url("naves/image5.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 450px;
   width: 450px;
+  height: 450px;
   margin: 50px;
-  padding-left: 46px;
-  padding-top: 44px;
-
-
+  padding-left: 42px;
+  padding-top: 46px;
+  margin-left: 70px;
 }
-
-.grid-stack {
-  width: 390px;
-}
-
 
 .grid-stack-item {
   width: 100%;
@@ -99,22 +92,22 @@ body{
   border: solid 2px red;
 }
 
-.shipsSunken{
+.shipsSunken {
   display: none;
- background:  hsla(6, 90%, 46%, 0.8);
+  background: hsla(6, 90%, 46%, 0.8);
   font-weight: bold;
   border: solid 2px red;
   border-radius: 10px;
   height: 100%;
   color: white;
   text-align: center;
-  justify-content:flex-end;
+  justify-content: flex-end;
   align-content: flex-end;
 }
 
 /* SECTION SHIPS SUNKEN */
 
-#sunken{
+#sunken {
   display: none;
   position: absolute;
   z-index: 1000;
@@ -122,20 +115,19 @@ body{
   height: 281px;
   width: 500px;
   margin-left: 400px;
-  
+
 }
 
-
-
-.sunken{  
+.sunken {
   text-align: center;
   background: url("naves/juegos-64.gif");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 100%;
   width: 100%;
-  
+
 }
+
 .sunken > p {
   margin-top: 50px;
   color: white;
@@ -240,8 +232,8 @@ h1 {
   border: solid 3px red !important;
 }
 
-td{
-  color:white;
+td {
+  color: white;
   font-weight: bold;
 }
 
@@ -268,7 +260,7 @@ td{
   background: hsla(0, 0%, 0%, 0.8);
   border-radius: 10px;
   width: 280px;
- padding: 15px;
+  padding: 15px;
 }
 
 .adentro {
@@ -276,6 +268,19 @@ td{
   margin-top: 50px;
   width: 100%;
 }
+
+.message-win {
+  font-family: fantasy;
+  color: yellow;
+  font-size: 50px;
+}
+.message-lost {
+  font-family: fantasy;
+  color: darkred;
+  font-size: 50px;
+}
+
+/* SECTION HITS */
 
 .section-hits {
   margin-bottom: 50px;
@@ -296,6 +301,8 @@ td{
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
+
+/* SHIPS */
 
 .carrierHorizontal {
 
@@ -409,16 +416,19 @@ td{
     height: 70px;
 
   }
-    .header > div {
+
+  .header > div {
     margin-left: 10px;
     margin-right: 60px;
   }
-    .titulo {
+
+  .titulo {
     font-size: 18px;
     margin-bottom: 0px;
     letter-spacing: 2px;
   }
-    #players {
+
+  #players {
     font-size: 15px;
     width: 50%;
     font-weight: none;
@@ -436,28 +446,33 @@ td{
     height: 400px;
 
   }
-    #grid {
+
+  #grid {
 
     margin: 0px;
     margin-left: 0px;
-    padding-left: 46px;
-    padding-top: 46px;
+
 
   }
-    .list-group {
+
+  .list-group {
     margin-left: 30px;
 
   }
 
-    .instructions {
+  .instructions {
     margin-top: 40px;
     width: 350px;
     height: 50%;
   }
 
-  #sunken{
+  #sunken {
     margin-left: 10px;
     width: 400px;
+  }
+
+  .list-group-item {
+    width: 300px;
   }
 }
 
@@ -467,17 +482,18 @@ td{
     margin-left: 70px;
 
   }
-    #grid {
+
+  #grid {
     margin: 0px;
     margin-left: 70px;
 
   }
-    #sunken{
+
+  #sunken {
     margin-left: 100px;
     width: 500px;
   }
- 
+  
+
+
 }
-
-
-

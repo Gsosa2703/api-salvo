@@ -32,6 +32,7 @@ function crearJson() {
       app.sinkOpponent = json.sinksOponente;
       app.stateGame = json.state;
 
+
       alertTurn();
 
       paintSalvoes();
@@ -187,11 +188,11 @@ function crearGrid() {
       var yShip = 10 - widthShip;
       var xShip = 10 - heigthShip;
 
-      if ($(this).children().hasClass(idShip + "Horizontal") && y <= yShip && grid.isAreaEmpty(x, y + 1, heigthShip, widthShip)) {
+      if ($(this).children().hasClass(idShip + "Horizontal") && y <= yShip && grid.isAreaEmpty(x, y + 1, heigthShip, widthShip - 1)) {
         grid.resize($(this), heigthShip, widthShip);
         $(this).children().removeClass(idShip + "Horizontal");
         $(this).children().addClass(idShip + "Vertical");
-      } else if ($(this).children().hasClass(idShip + "Vertical") && x <= xShip && grid.isAreaEmpty(x + 1, y, heigthShip, widthShip)) {
+      } else if ($(this).children().hasClass(idShip + "Vertical") && x <= xShip && grid.isAreaEmpty(x + 1, y, heigthShip - 1, widthShip)) {
         grid.resize($(this), heigthShip, widthShip);
         $(this).children().addClass(idShip + "Horizontal");
         $(this).children().removeClass(idShip + "Vertical");
@@ -355,6 +356,7 @@ function postSalvoes(turn, salvoLocations) {
 function guardarSalvoLocations(id) {
 
   app.id = id;
+
   if (app.salvo.salvoLocations.length < 5) {
 
 
@@ -364,7 +366,7 @@ function guardarSalvoLocations(id) {
       document.getElementById(id).classList.add("salvoesSelect");
 
       app.salvoesPlayer.forEach(sp => {
-        app.idSalvoPlayer = sp.player;
+
         sp.salvoLocations.forEach(eachSalvoLocation => {
           if (app.salvo.salvoLocations.includes(eachSalvoLocation)) {
 
@@ -465,9 +467,10 @@ function hitsOnOpponent() {
 
 function createHit(allHits) {
 
+
   for (i = 0; i < allHits.length; i++) {
 
-    var hits = allHits[0].hits.concat(app.hitsOpponent[i].hits);
+    var hits = allHits.length == 1 ? allHits[0].hits : allHits[0].hits.concat(app.hitsOpponent[i].hits);
 
 
     for (j = 0; j < hits.length; j++) {
@@ -476,7 +479,7 @@ function createHit(allHits) {
       document.getElementById("grid-ships").appendChild(hit);
       hit.classList.add("hit");
 
-      var marginLeft = 40 * (parseInt(hits[j][1]) - 1);
+      var marginLeft = hits[j].length == 3 ? 40 * (parseInt(hits[j][2]) + 9) : 40 * (parseInt(hits[j][1]) - 1);
 
       var letra = hits[j][0];
       switch (letra) {
@@ -544,33 +547,36 @@ function alertTurn() {
   }
 }
 
+
 function sunken() {
+  
+  let barcoDefault = {
+    ships: []
+  }
 
-  if (app.game_view.salvoes.length >= 2) {
+  app.shipsunken = app.salvoesPlayer.length == 0 ? barcoDefault : app.sinkPlayer.pop();
+  var ultimoShipSunken = app.sinkPlayer.length == 0 ? app.shipsunken : app.sinkPlayer[app.sinkPlayer.length - 1];
+  app.shipSunkenOponent = app.salvoesOponent.length == 0 ? barcoDefault : app.sinkOpponent.pop();
+  var ultimoShipSunkenOponent = app.sinkOpponent == 0 ? app.shipSunkenOponent : app.sinkOpponent[app.sinkOpponent.length - 1];
 
-    app.shipsunken = app.sinkPlayer.pop();
-    app.firstSink = app.sinkPlayer.length;
-    var ultimoShipSunken = app.sinkPlayer[app.sinkPlayer.length - 1];
-    app.shipSunkenOponent = app.sinkOpponent.pop();
-    app.firstSinkOponent = app.sinkOpponent.length;
-    var ultimoShipSunkenOponent = app.sinkOpponent[app.sinkOpponent.length - 1];
+  if (app.shipsunken.ships.length > 0) {
 
-    if (app.shipsunken.ships.length > 0 || app.shipSunkenOponent.ships.length > 0) {
+    if ((app.shipsunken.turn == 1 || app.shipsunken.ships.length != ultimoShipSunken.ships.length) && app.stateGame == "WAIT_OPPONENT_ATTACK") {
 
-      if ((app.firstSink == 0 || app.shipsunken.ships.length != ultimoShipSunken.ships.length) && app.stateGame == "WAIT_OPPONENT_ATTACK") {
+      document.getElementById("explosion").setAttribute("autoplay", "autoplay");
+      aparecerYDesaparecer("#sunken");
 
-        document.getElementById("explosion").setAttribute("autoplay", "autoplay");
-        aparecerYDesaparecer("#sunken");
-       
 
-      } else if ((app.firstSinkOponent == 0 || app.shipSunkenOponent.ships.length != ultimoShipSunkenOponent.ships.length) && app.stateGame == "FIRE") {
+    }
+  }
+  if (app.shipSunkenOponent.ships.length > 0) {
+    if ((app.shipSunkenOponent.turn == 1 || app.shipSunkenOponent.ships.length != ultimoShipSunkenOponent.ships.length) && app.stateGame == "FIRE") {
 
-        document.getElementById("explosion").setAttribute("autoplay", "autoplay");
-        aparecerYDesaparecer("#alert");
-        var p = document.getElementById("p-sunken");
-        p.innerHTML = "Sorry ships have been sunk";
+      document.getElementById("explosion").setAttribute("autoplay", "autoplay");
+      aparecerYDesaparecer("#alert");
+      var p = document.getElementById("p-sunken");
+      p.innerHTML = "Sorry ships have been sunk";
 
-      }
     }
   }
 }
@@ -578,27 +584,45 @@ function sunken() {
 
 
 
-
 function aparecerYDesaparecer(div) {
-  $(document).ready(function () {
-    setTimeout(function () {
-    
-      // Declaramos la capa mediante una clase para ocultarlo
-      $(div).fadeIn(0);
-         document.getElementById("fluid").style.filter = "blur(5px)";
-    }, 0);
-  });
+  if (div == "#sunken") {
+    $(document).ready(function () {
+      setTimeout(function () {
 
-  $(document).ready(function () {
-    setTimeout(function () {
-      // Declaramos la capa  mediante una clase para ocultarlo
-      $(div).fadeOut(1500);
-      // Transcurridos 5 segundos aparecera la capa midiv2
-         document.getElementById("fluid").style.filter = "none";
-    }, 7000);
-  });
+        // Declaramos la capa mediante una clase para ocultarlo
+        $(div).fadeIn(0);
+        document.getElementById("fluid").style.filter = "blur(5px)";
+      }, 0);
+    });
+
+    $(document).ready(function () {
+      setTimeout(function () {
+        // Declaramos la capa  mediante una clase para ocultarlo
+        $(div).fadeOut(1500);
+        // Transcurridos 5 segundos aparecera la capa midiv2
+        document.getElementById("fluid").style.filter = "none";
+      }, 7000);
+    });
+  } else {
+    $(document).ready(function () {
+      setTimeout(function () {
+
+        // Declaramos la capa mediante una clase para ocultarlo
+        $(div).fadeIn(0);
+      }, 0);
+    });
+
+    $(document).ready(function () {
+      setTimeout(function () {
+        // Declaramos la capa  mediante una clase para ocultarlo
+        $(div).fadeOut(1500);
+
+      }, 7000);
+
+    })
+  }
 }
-//
+
 //function mensaje() {
 //
 //  if (app.stateGame == "WAIT_OPPONENT_ATTACK") {
@@ -610,4 +634,4 @@ function aparecerYDesaparecer(div) {
 //
 //}
 //
-//setTimeout(mensaje, 15000);
+//setTimeout(mensaje, 20000);
