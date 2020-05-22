@@ -146,10 +146,10 @@ public class GamePlayer {
     public String getStateGame() {
         String state = " ";
 
-        if (this.getOpponent().isEmpty()) {
+        if (!this.getOpponent().isPresent()) {
             if (this.getShips().isEmpty()) {
                 state = "PLACE_SHIPS";
-            } else if (this.getOpponent().isEmpty()) {
+            } else if (!this.getOpponent().isPresent()) {
                 state = "WAIT_OPPONENT";
             }
         } else {

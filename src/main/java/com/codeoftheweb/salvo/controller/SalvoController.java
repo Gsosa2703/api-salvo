@@ -140,7 +140,7 @@ public class SalvoController {
         Player playerLog = playerRepository.findByUserName(auth.getName());
         Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
 
-        if (gamePlayer.isEmpty() ) {
+        if (!gamePlayer.isPresent() ) {
             return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.NOT_FOUND), HttpStatus.UNAUTHORIZED);
         }
 
