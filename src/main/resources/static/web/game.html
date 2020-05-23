@@ -4,6 +4,8 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
+    <meta name="theme-color" content="#282D34">
+  <link rel="icon" sizes="192x192" href="css/naves/icon.jpg">
   <title>Ship Locations!</title>
   <link rel="stylesheet" href="bootstrap4/bootstrap-4.3.1-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@1.1.0/dist/gridstack.min.css" />
@@ -16,7 +18,7 @@
 <body>
   <div id="app">
     
-     <audio src="css/naves/audio.mp3" autoplay loop></audio>
+     <audio src="css/naves/audio.mp3"  loop></audio>
     <section id="sunken">
       <div class="sunken">
         <audio src="css/naves/explosion.mp3" id="explosion"></audio>
@@ -33,7 +35,7 @@
           <p id="players"> Players : {{player.name}} <span class="current"> VS </span> {{oponent.name}}</p>
         </div>
         <div class="stateGame col-12 ">
-          <p> Game State : {{stateGame}}</p>
+          <p > Game State : <span class="blink">{{stateGame}}</span></p>
         </div>
         <div class="shipsSunken align-self-end" id="alert">
           <p id="p-sunken"></p>
@@ -240,14 +242,14 @@
       </section>
 
       <div class="row header fixed-bottom justify-content-center">
-        <div class="col-2" id="buttonShips">
-          <button type="button" class="buttonShips  button btn btn-dark">Save your Ships!</button>
+        <div class="col-2 vibrar" id="buttonShips">
+          <button type="button" class="buttonShips icono button btn btn-dark">Save your Ships!</button>
         </div>
-        <div class="col-2" id="buttonSalvo">
-          <button type="button" class="buttonSalvo button  btn btn-dark" onclick="buttonSalvoes()">Shoot to your Opponent</button>
+        <div class="col-2 vibrar" id="buttonSalvo">
+          <button type="button" class="buttonSalvo button icono btn btn-dark" onclick="buttonSalvoes()">Shoot  your Opponent</button>
         </div>
-        <div class="col-2">
-          <button type="button" class="  button btn btn-dark" onclick="history.back()">Exit Game</button>
+        <div class="col-2 vibrar">
+          <button type="button" class=" icono button btn btn-dark" onclick="history.back()">Exit Game</button>
         </div>
       </div>
 

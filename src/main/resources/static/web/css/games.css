@@ -26,7 +26,7 @@ nav > a:hover {
   text-decoration: underline;
 }
 
-nav > img {
+.signin {
   height: 50px;
   width: 50px;
 }
@@ -226,7 +226,7 @@ nav > img {
 .titulo-welcome {
   text-align: center;
   color: white;
-  font-size: 50px !important;
+  font-size: 50px;
   font-family: georgia;
 
 }
@@ -273,7 +273,7 @@ h2 {
   background: lightblue;
   opacity: 0.8;
   width: 200px;
-  height: 350px;
+
   padding: 10x;
 }
 
@@ -287,7 +287,7 @@ h2 {
 
 .formulario {
   width: 150px;
-  height: 350px;
+
   padding: 10px;
   text-align: center;
   background: lightgray;
@@ -320,6 +320,9 @@ input {
 .newPlayer {
   font-size: 20px;
   color: black;
+}
+#back{
+  font-size: 12px;
 }
 
 
@@ -450,9 +453,9 @@ footer {
   }
 
   .landscape-circle {
-    height: 200px;
+    height: 230px;
     padding: 20px;
-    padding-top: 40px;
+    padding-top: 30px;
     display: block;
     background: #102031;
     font-family: Luckiest Guy;
@@ -484,7 +487,6 @@ footer {
 
   .formulario {
     width: 400px;
-    height: 350px;
     padding: 10px;
     text-align: center;
     background: lightgray;
@@ -498,7 +500,7 @@ footer {
     background: lightblue;
     opacity: 0.8;
     width: 400px;
-    height: 200px;
+
     padding: 10x;
   }
 
@@ -518,6 +520,9 @@ footer {
   
   .logIn {
     width: 90%;
+  }
+  .titulo-welcome{
+    font-size: 15px;
   }
 
 
@@ -585,4 +590,16 @@ div.subapartado:hover div.info {
 
   height: 100%;
 
+}
+.vibrar:active .icono {
+  -webkit-animation: tiembla 0.2s 1;
+  -moz-animation: tiembla 0.2s 1;
+  -o-animation: tiembla 0.2s 1;
+ -ms-animation: tiembla 0.2s 1;
+}
+@-webkit-keyframes tiembla {
+  0%  { -webkit-transform:rotateZ(-5deg); }
+  50% { -webkit-transform:rotateZ( 0deg) scale(1.4); }
+  100%{ -webkit-transform:rotateZ( 5deg);
+}
 }

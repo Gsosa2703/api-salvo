@@ -7,9 +7,16 @@ $(document).ready(function () {
   $("#button-register").click(function () {
     $("#form-register").show();
   })
+  $("#back").click(function () {
+    $("#form-logIn").show();
+    $("#form-register").hide();
+
+  })
+
 
 
 });
+
 
 
 
@@ -107,8 +114,14 @@ function interface(player) {
 
   } else {
     var divLogOut = "";
-    divLogOut = "<p class=titulo-welcome>" + "Welcome to the Battleship " + player.name + "</p>" + "<h2 class=titulo-leader>Leaderboard</h2>" + " <p id=parrafo-leader>Be the first one!</p>";
-    document.getElementById("tabla-pantalla").innerHTML += divLogOut;
+    divLogOut = "<p class=titulo-welcome>" + "Welcome to the Battleship " + player.name + "</p>";
+
+    var divsWelcome = document.getElementsByClassName("tabla-welcome");
+
+    for (let i = 0; i < divsWelcome.length; i++) {
+      divsWelcome[i].innerHTML += divLogOut;
+    }
+
     //funcion para hacer aparecer el log Out
     $(document).ready(function () {
       setTimeout(function () {
@@ -130,15 +143,18 @@ $.ajax({
   DataType: "json"
 
 }).done(function (data) {
+
   function crearLista(data, playerLogged) {
     if (playerLogged == null) {
-      console.log("Logueate para que disfrutes!!")
+      console.log("Logueate para que disfrutes!!");
+
     } else {
+
       var valor = '';
 
       for (var i = 0; i < data.length; i++) {
 
-        valor += "<li class=list-group-item>" + data[i].created + "<ul>" + "<h2 class=player>" + "Players:" + "</h2>";
+        valor += "<li class=list-group-item>" + "Game #" + (i + 1) + '<br>' + 'Created: ' + data[i].created + "<ul>" + "<h2 class=player>" + "Players:" + "</h2>";
 
         var gamePlayers = data[i].gamesPlayers;
 
@@ -184,14 +200,15 @@ $.ajax({
   function jsonLeaderboard(data) {
 
     var info = [];
-    for (i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
       var gamePlayers = data[i].gamesPlayers;
       console.log(gamePlayers);
 
-      for (j = 0; j < gamePlayers.length; j++) {
+      for (var j = 0; j < gamePlayers.length; j++) {
         var newPlayer = info.find(player => player.email == gamePlayers[j].player.email);
         if (newPlayer == undefined) {
           var player = {
+
             email: '',
             totalScores: 0,
             win: 0,
@@ -257,17 +274,21 @@ $.ajax({
     var tabla = "";
 
 
-    for (i = 0; i < infoTabla.length; i++) {
+    for (var i = 0; i < infoTabla.length; i++) {
       if (infoTabla[i].totalScores === undefined) {
         infoTabla[i].totalScores = 0
 
-        tabla += "<tr>" + "<td>" + infoTabla[i].email + "</td>" +
+        tabla += "<tr>" +
+          "<td>" + (i + 1) + "</td>" +
+          "<td>" + infoTabla[i].email + "</td>" +
           "<td>" + infoTabla[i].totalScores + "</td>" +
           "<td>" + infoTabla[i].win + "</td>" +
           "<td>" + infoTabla[i].losses + "</td>" +
           "<td>" + infoTabla[i].tied + "</td>" + "</tr>"
       } else {
-        tabla += "<tr>" + "<td>" + infoTabla[i].email + "</td>" +
+        tabla += "<tr>" +
+          "<td>" + (i + 1) + "</td>" +
+          "<td>" + infoTabla[i].email + "</td>" +
           "<td>" + infoTabla[i].totalScores + "</td>" +
           "<td>" + infoTabla[i].win + "</td>" +
           "<td>" + infoTabla[i].losses + "</td>" +

@@ -180,9 +180,7 @@ public class SalvoController {
         if (gamePlayer.get().getPlayer().getId() != playerLogged.getId()) {
             return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.FAIL_USER), HttpStatus.UNAUTHORIZED);
         }
-        if (gamePlayer.get().getSalvoes().stream().anyMatch(s -> s.getTurn() == salvo.getTurn())) {
-            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.TURN_FOUND), HttpStatus.UNAUTHORIZED);
-        }
+
 
         if (salvo.getTurn() != gamePlayer.get().getSalvoes().size() + 1) {
             return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.TURN_NOT_FOUND), HttpStatus.FORBIDDEN);
@@ -201,6 +199,9 @@ public class SalvoController {
         }
         if(!stateGame.equals("FIRE")){
             return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.NOT_SALVOES), HttpStatus.FORBIDDEN);
+        }
+        if (gamePlayer.get().getSalvoes().stream().anyMatch(s -> s.getTurn() == salvo.getTurn())) {
+            return new ResponseEntity<>(makeMap(AppMessages.error, AppMessages.TURN_FOUND), HttpStatus.FORBIDDEN);
         }
 
         gamePlayer.get().addSalvoes(salvo);

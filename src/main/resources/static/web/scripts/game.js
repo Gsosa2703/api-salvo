@@ -15,6 +15,7 @@ crearJson();
 function crearJson() {
   fetch("/api/game_view/" + myParam, )
     .then(function (response) {
+
       return response.json()
     })
     .then((json) => {
@@ -43,9 +44,10 @@ function crearJson() {
 
 
       createHit(app.hitsOpponent);
+      sunken()
 
-      //      sunkenShip();
-      sunken();
+   
+
 
     });
 
@@ -545,11 +547,12 @@ function alertTurn() {
 
     }
   }
+
 }
 
 
 function sunken() {
-  
+
   let barcoDefault = {
     ships: []
   }
@@ -623,15 +626,34 @@ function aparecerYDesaparecer(div) {
   }
 }
 
-//function mensaje() {
+function mensaje() {
+
+  if (app.stateGame == "WAIT_OPPONENT_ATTACK") {
+    console.log("actualizando");
+    location.reload();
+  } else if (app.stateGame == "WAIT_OPPONENT_SHIPS" || app.stateGame == "WAIT_OPPONENT") {
+    location.reload();
+  }
+
+}
+
+setTimeout(mensaje, 20000);
+
+
+
 //
-//  if (app.stateGame == "WAIT_OPPONENT_ATTACK") {
-//    console.log("actualizando");
-//    location.reload();
-//  } else if (app.stateGame == "WAIT_OPPONENT_SHIPS" || app.stateGame == "WAIT_OPPONENT") {
-//    location.reload();
-//  }
+//    async function PrimerProceso(){
+//            let valor = await crearJson();
+//            return  valor;
+//    }
 //
-//}
-//
-//setTimeout(mensaje, 20000);
+//    async function llamarFunctionAsincrona(){
+//        let resultado = await PrimerProceso();
+//        return resultado * 2;
+//    }
+//    llamarFunctionAsincrona().then(val => {
+//        console.log("el resultado final es " + val)
+//    }, error => {
+//        console.log(error);
+//    })
+

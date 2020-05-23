@@ -4,11 +4,14 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
-  <title>Salvo</title>
+  <meta name="theme-color" content="#102031">
+  <link rel="icon" sizes="192x192" href="css/naves/icon.jpg">
+  <title>World of Warships</title>
   <link rel="stylesheet" href="bootstrap4/bootstrap-4.3.1-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/games.css">
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Luckiest+Guy" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  
 </head>
 
 <body>
@@ -23,8 +26,10 @@
         </p>
       </div>
       <nav class="col-md-3 col-sm-4">
-        <a href="#" onclick="logOut()"> Log Out</a>
-        <img src="css/naves/sign.png" alt="signin" class="signin">
+        <a class="vibrar" href="#" onclick="logOut()"> Log Out
+        <img src="css/naves/sign.png" alt="signin" class="signin icono">
+        </a>
+        
       </nav>
 
     </header>
@@ -34,10 +39,11 @@
 
 
       <div class="landscape-circle col-sm-12 ">
-        <div>
+        <div class="vibrar">
+          <p class="tabla-welcome"></p>
           <p>Start your own Battleship!</p>
           <p class="texto-circle"> Create a game and shoot your opponent's grid to find and destroy enemy ships before they sink yours </p>
-          <input type="button" class="btn btn-primary" id="button-crearJuego" value="Create a Game" onclick="crearJuego()">
+          <input type="button" class="btn btn-primary icono" id="button-crearJuego" value="Create a Game" onclick="crearJuego()">
         </div>
       </div>
 
@@ -70,6 +76,7 @@
               <table class="tablaGames table" id="tabla">
                 <thead>
                   <tr id="tr">
+                    <td>#</td>
                     <td>Name</td>
                     <td>Total</td>
                     <td>Wins</td>
@@ -94,19 +101,23 @@
       <div class="contenedor-tabla col-lg-12">
         <div class="row">
           <div class=" circulo col-6 pt-2">
-            <div class="circle ">
+            <div class="circle vibrar">
               <p>Start your own Battleship!</p>
               <p class="texto-circle"> Create a game and shoot your opponent's grid to find and destroy enemy ships before they sink yours </p>
-              <input type="button" class="btn btn-primary button-create" id="button-crearJuego" value="Create a Game" onclick="crearJuego()">
+              <input type="button" class="btn btn-primary button-create icono" id="button-crearJuego" value="Create a Game" onclick="crearJuego()">
             </div>
           </div>
 
           <div class=" tabla-pantalla col-6 pt-5">
-            <div id="tabla-pantalla">
+            <div class="tabla-welcome">
+         
             </div>
+            <h2 class=titulo-leader>Leaderboard</h2> 
+            <p id=parrafo-leader>Be the first one!</p>
             <table class="tablaGames" id="tabla2">
               <thead>
                 <tr id="tr2">
+                  <td>#</td>
                   <td>User Name</td>
                   <td>Total</td>
                   <td>Wins</td>
@@ -182,6 +193,7 @@
         <input type="password" id="spassword" name="password" placeholder="***"><br>
         <input type="button" class="btn btn-dark" value="Register now!" onclick="signIn()">
       </form>
+      <a href="#" id="back">Back</a>
     </div>
 
 

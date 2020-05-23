@@ -212,7 +212,7 @@ h1 {
 
 .salvoesSelect {
 
-  background: radial-gradient(green, transparent);
+  background: radial-gradient(black, transparent);
   border-radius: 100px;
 
 
@@ -264,7 +264,7 @@ td {
 }
 
 .adentro {
-  padding-bottom: 50px;
+  padding-bottom: 70px;
   margin-top: 50px;
   width: 100%;
 }
@@ -293,11 +293,11 @@ td {
   height: 50px;
   font-size: 15px;
   font-weight: bold;
-  background: #136a8a;
+   background: #0f0c29;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #267871, #136a8a);
+  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #267871, #136a8a);
+  background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
@@ -440,7 +440,7 @@ td {
 
 @media screen and (min-width: 200px) and (max-width: 769px) {
   #tabla-salvo {
-    margin-left: 10px;
+    margin-left: 0px;
     margin-top: 20px;
     width: 450px;
     height: 400px;
@@ -499,4 +499,32 @@ td {
   
 
 
+}
+
+.vibrar:active .icono {
+  -webkit-animation: tiembla 0.2s 1;
+  -moz-animation: tiembla 0.2s 1;
+  -o-animation: tiembla 0.2s 1;
+ -ms-animation: tiembla 0.2s 1;
+}
+@-webkit-keyframes tiembla {
+  0%  { -webkit-transform:rotateZ(-5deg); }
+  50% { -webkit-transform:rotateZ( 0deg) scale(1.4); }
+  100%{ -webkit-transform:rotateZ( 5deg);
+}
+}
+
+.blink {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
 }
