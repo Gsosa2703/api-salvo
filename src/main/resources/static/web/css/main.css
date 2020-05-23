@@ -442,13 +442,17 @@ td {
   #tabla-salvo {
     margin-left: 10px;
     margin-top: 20px;
-    width: 420px;
+    width: 450px;
     height: 400px;
 
   }
+  
+  #myfleet{
+    margin-top: 30px;
+  }
 
   #grid {
-
+ 
     margin: 0px;
     margin-left: 0px;
 
@@ -461,7 +465,6 @@ td {
   }
 
   .instructions {
-    margin-top: 40px;
     width: 350px;
     height: 50%;
   }
