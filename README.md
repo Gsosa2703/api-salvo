@@ -1,6 +1,6 @@
 # The WarShip Game
 
-## A front-end web application that game players interact with, and a back-end game server to manage the games, scoring, and player profiles. 
+### A front-end web application that game players interact with, and a back-end game server to manage the games, scoring, and player profiles. 
 
 The core arquitecture was made :
 - A small Java back-end server to store Salvo game data, and send that data to client apps via a RESTful API.
