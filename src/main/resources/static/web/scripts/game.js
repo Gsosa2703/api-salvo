@@ -634,7 +634,7 @@ function mensaje() {
   } else if (app.stateGame == "WAIT_OPPONENT_SHIPS" || app.stateGame == "WAIT_OPPONENT") {
     location.reload();
   }
-
+  
 }
 
 setTimeout(mensaje, 20000);

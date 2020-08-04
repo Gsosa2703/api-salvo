@@ -38,7 +38,7 @@ public class SalvoController {
     @Autowired
     private ScoreRepository scoreRepository;
 
-    ///POST PARA CREAR JUEGOS
+    ///GET PARA CREAR JUEGOS
     @RequestMapping("games")
     public Map<String, Object> Games(Authentication authentication) {
         Map<String, Object> dto = new LinkedHashMap<>();
