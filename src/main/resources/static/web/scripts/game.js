@@ -1,3 +1,5 @@
+
+
 const queryString = window.location.search;
 
 
@@ -42,8 +44,8 @@ function crearJson() {
 
       hitsOnOpponent();
 
-
       createHit(app.hitsOpponent);
+
       sunken()
 
    
@@ -88,7 +90,9 @@ var app = new Vue({
     toUpper: function (str) {
       return str[0].toUpperCase() + str.slice(1);
     }
-  }
+  },
+
+
 
 });
 //---------------------------------SHIPS-----------------------------------------------------------//
@@ -566,7 +570,7 @@ function sunken() {
 
     if ((app.shipsunken.turn == 1 || app.shipsunken.ships.length != ultimoShipSunken.ships.length) && app.stateGame == "WAIT_OPPONENT_ATTACK") {
 
-      document.getElementById("explosion").setAttribute("autoplay", "autoplay");
+    //  document.getElementById("explosion").setAttribute("autoplay", "autoplay");
       aparecerYDesaparecer("#sunken");
 
 
@@ -591,8 +595,6 @@ function aparecerYDesaparecer(div) {
   if (div == "#sunken") {
     $(document).ready(function () {
       setTimeout(function () {
-
-        // Declaramos la capa mediante una clase para ocultarlo
         $(div).fadeIn(0);
         document.getElementById("fluid").style.filter = "blur(5px)";
       }, 0);
@@ -600,9 +602,7 @@ function aparecerYDesaparecer(div) {
 
     $(document).ready(function () {
       setTimeout(function () {
-        // Declaramos la capa  mediante una clase para ocultarlo
         $(div).fadeOut(1500);
-        // Transcurridos 5 segundos aparecera la capa midiv2
         document.getElementById("fluid").style.filter = "none";
       }, 7000);
     });
@@ -629,31 +629,13 @@ function aparecerYDesaparecer(div) {
 function mensaje() {
 
   if (app.stateGame == "WAIT_OPPONENT_ATTACK") {
-    console.log("actualizando");
+    
     location.reload();
+
   } else if (app.stateGame == "WAIT_OPPONENT_SHIPS" || app.stateGame == "WAIT_OPPONENT") {
     location.reload();
   }
-  
+
 }
 
 setTimeout(mensaje, 20000);
-
-
-
-//
-//    async function PrimerProceso(){
-//            let valor = await crearJson();
-//            return  valor;
-//    }
-//
-//    async function llamarFunctionAsincrona(){
-//        let resultado = await PrimerProceso();
-//        return resultado * 2;
-//    }
-//    llamarFunctionAsincrona().then(val => {
-//        console.log("el resultado final es " + val)
-//    }, error => {
-//        console.log(error);
-//    })
-

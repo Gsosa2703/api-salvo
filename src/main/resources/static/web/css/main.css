@@ -74,7 +74,8 @@ body {
   margin: 50px;
   padding-left: 42px;
   padding-top: 46px;
-  margin-left: 70px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .grid-stack-item {
@@ -220,8 +221,9 @@ h1 {
 
 #tabla-salvo {
   background: hsla(6, 7%, 64%, 0.7);
-  margin-left: 49px;
-  margin-top: 49px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
 }
 
 
@@ -440,8 +442,8 @@ td {
 
 @media screen and (min-width: 200px) and (max-width: 769px) {
   #tabla-salvo {
-    margin-left: 0px;
-    margin-top: 20px;
+  
+    margin-top: 40px;
     width: 450px;
     height: 400px;
 
@@ -449,14 +451,6 @@ td {
   
   #myfleet{
     margin-top: 30px;
-  }
-
-  #grid {
- 
-    margin: 0px;
-    margin-left: 0px;
-
-
   }
 
   .list-group {
@@ -477,20 +471,19 @@ td {
   .list-group-item {
     width: 300px;
   }
+  #tableSalvoes {
+    margin-top: 80px;
+  }
+
 }
 
 @media screen and (min-width: 770px) and (max-width: 990px) {
-  #tabla-salvo {
-    margin: 0px;
-    margin-left: 70px;
 
+  #tableSalvoes {
+    margin-top: 80px;
   }
 
-  #grid {
-    margin: 0px;
-    margin-left: 70px;
 
-  }
 
   #sunken {
     margin-left: 100px;

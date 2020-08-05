@@ -187,6 +187,9 @@ public class GamePlayer {
     }
 
 
+
+
+
     public void addShip(Ship ship) {
         ship.setGamePlayer(this);
         ships.add(ship);
